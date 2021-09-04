@@ -1,0 +1,47 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@font-face {
+    font-family: 'proximanova-regular';
+    src: url('http://localhost:4200/assets/proximanova-regular-webfont.woff2') format('woff2'),
+		url('http://localhost:4200/assets/proximanova-regular.otf') format('opentype'),
+         url('http://localhost:4200/assets/proximanova-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	
+
+}
+
+@font-face {
+    font-family: 'proximanova-medium';
+    src: url('http://localhost:4200/assets/proximanova-medium-webfont.woff2') format('woff2'),
+         url('http://localhost:4200/assets/proximanova-medium-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'proximanova-bold';
+    src: url('http://localhost:4200/assets/proximanova-bold-webfont.woff2') format('woff2'),
+         url('http://localhost:4200/assets/proximanova-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'proximanova-light';
+    src: url('http://localhost:4200/assets/proximanova-light-webfont.woff2') format('woff2'),
+         url('http://localhost:4200/assets/proximanova-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'proximanova-semibold';
+    src: url('http://localhost:4200/assets/proximanova-semibold-webfont.woff2') format('woff2'),
+         url('http://localhost:4200/assets/proximanova-semibold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}

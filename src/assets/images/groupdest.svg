@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="113" height="113" viewBox="0 0 113 113">
+    <defs>
+        <filter id="a" width="100%" height="100%" x="0%" y="0%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic"/>
+        </filter>
+        <filter id="b" width="546.6%" height="546.6%" x="-223.3%" y="-223.3%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="14.707"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <circle cx="56.5" cy="56.5" r="56.5" fill="#FFF" filter="url(#a)" opacity=".169"/>
+        <circle cx="57" cy="57" r="11" fill="#FFF" stroke="#44CBCE" stroke-width="10" filter="url(#b)"/>
+        <circle cx="56" cy="56" r="11" stroke="#5CE0F4" stroke-width="5"/>
+    </g>
+</svg>

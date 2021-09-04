@@ -1,0 +1,52 @@
+<label class="label1">Share your route and follow us</label>
+<ul>
+  <li><label class="label1">Share</label></li>
+
+  <!-- <div class="mobiletriangle"></div> -->
+
+  <div class="show" *ngIf="show">
+    
+    <div class="smallrectangle">
+        <div class="smalltriangle"></div>
+      <div class="shareitems">
+        <!-- <label class="sharelable">Share</label>&nbsp;&nbsp;&nbsp; -->
+        <a href="javascript:void(0)" (click)="twittershare()">
+          <img class="shareitemimg" src="../../assets/images/twitter.svg" /></a>
+        <a href="javascript:void(0)" (click)="facebookshare()">
+          <img class="shareitemimg" src="../../assets/images/facebook.svg" /></a>
+        <a href="javascript:void(0)" (click)="linkedInshare()">
+          <img class="shareitemimg" src="../../assets/images/linkedin.svg" /></a>
+        <a href="javascript:void(0)" (click)="copytxt()">
+          <img class="shareitemimg" src="../../assets/images/share-icon.svg" /></a>
+        <a href="javascript:void(0)" (click)="emailshare()">
+          <img class="shareitemimg" src="../../assets/images/email.svg" /></a>
+          <a href="javascript:void(0)" (click)="Instashare()">
+            <img class="shareitemimg" src="../../assets/images/instagram.svg" />
+          </a>
+      </div>
+    </div>
+  </div>
+  <li class="sharing">
+    <img class="shareimage" (click)="show = !show" src="../../assets/images/share.svg" alt="" />
+  </li>
+  <li>
+    <img class="dotline" src="../../assets/images/dottedline.svg" />
+  </li>
+
+  <li><label class="label1">Follow</label></li>
+  <li>
+    <img class="twitter" (click)="twittershare()" src="../../assets/images/twitter.svg" />
+  </li>
+  <li>
+    <img class="facebook" (click)="facebookshare()" src="../../assets/images/facebook.svg" />
+  </li>
+
+  <li>
+    <img class="linked" src="../../assets/images/linkedin.svg" (click)="linkedInshare()" />
+  </li>
+  <li>
+    <img class="instagram"(click)="Instashare()" src="../../assets/images/instagram.svg" />
+  </li>
+  <li><img class="youtube" (click)="youtubeShare()" src="../../assets/images/youtube.svg" /></li>
+</ul>
+

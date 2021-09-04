@@ -1,0 +1,148 @@
+@media screen and (max-width: 768px) {
+  ul {
+    list-style-type: none; /*to remove bullets*/
+    text-align: center;
+    padding: 0px;
+    overflow: hidden;
+    width: 100vw;
+    margin-left: 4%;
+  }
+
+  li {
+    padding: 6px;
+    display: inline-block;
+    margin-top: -1.3vw;
+    margin-left: 0.1vw;
+  }
+
+  li img {
+    height: 5vw;
+    width: 5vw;
+  }
+  .shareitems {
+    width: 54vw;
+  }
+  .shareitemimg {
+    width: 5vw;
+    height: 5vw;
+    margin-left: 5%;
+  }
+
+  li img.noactive {
+    opacity: 0.3;
+    height: 3vw;
+    width: 30px;
+    padding-top: 0.2vw;
+  }
+
+  .smallrectangle {
+    width: 53.5vw;
+    /* height: 8vw; */
+    margin-left: 39%;
+    background-color: #ffff6b;
+    margin-top: -33%;
+    font-family: ProximaNova-light;
+    font-size: 1vw;
+    border-radius: 6.3px;
+    padding-left: -8px;
+    padding-top: 1.4%;
+  }
+  .show {
+    position: absolute;
+    z-index: 14;
+  }
+  .label1 {
+    font-size: 4.2vw;
+    text-align: center;
+    color: #fff;
+    display: block;
+    margin-top: 1%;
+  }
+  .sharelable {
+    color: #44cbce;
+    font-size: 3vw;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .smallrectangle {
+    width: 19.5vw;
+    height: 3vw;
+    margin-left: 8px;
+    background-color: #ffff6b;
+    margin-top: -31%;
+    font-family: ProximaNova-light;
+    font-size: 1vw;
+    border-radius: 6.3px;
+    padding-left: 0;
+    padding-top: 3px;
+    
+  }
+  .show {
+    position: absolute;
+    z-index: 14;
+  }
+
+  ul {
+    list-style-type: none; /*to remove bullets*/
+    text-align: center;
+    padding: 0px;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  li {
+    padding: 6px;
+    display: inline-block;
+    margin-top: -1.3vw;
+    margin-left: 0.1vw;
+  }
+
+  li img {
+    height: 1vw;
+    width: 1vw;
+  }
+  .shareitems {
+    margin-top: -3.2vw;
+    /* width: 54vw; */
+  }
+  .shareitemimg {
+    width: 3.1vw;
+    height: 1.4vw;
+    /* margin-left: 5%; */
+  }
+  .label1 {
+    font-size: 1.2vw;
+    color: #fff;
+    display: block;
+    margin-top: 2%;
+    text-align: center;
+  }
+  .sharelable {
+    color: #44cbce;
+    font-size: 1vw;
+  }
+
+  .smalltriangle {
+    height: 0.8vw;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    padding-left: 74%;
+    margin-top: -3%;
+    overflow: hidden;
+    z-index: 1000;
+    position: relative;
+    margin-top: 2.8vw;
+    /* margin-left: -81vw; */
+  }
+  .smalltriangle:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-left: -500px;
+    border-left: 500px solid transparent;
+    border-right: 500px solid transparent;
+    border-bottom: 500px solid yellow;
+  }
+}
