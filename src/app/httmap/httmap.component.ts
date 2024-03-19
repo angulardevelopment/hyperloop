@@ -16,18 +16,21 @@ import {
   animate
 } from "@angular/animations";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Http, Response } from "@angular/http";
+// import { Http, Response } from "@angular/http";
 import { NgxSpinnerService } from "ngx-spinner";
 import * as $ from "jquery";
 import * as Clipboard from "clipboard";
 import { AppSettings } from "../const/app_config";
 import { ApplicationStateService } from "../application-state.service";
 import { countryUnitSystem } from "../const/country_Array";
-import { MatSnackBar } from "@angular/material";
+// import { MatSnackBar } from "@angular/material";
 import { MapCss } from "../const/map_css";
 import { HttService } from "../htt.service";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { HttpClient } from "@angular/common/http";
 //
+declare var  google;
 @Component({
   selector: "app-httmap",
   templateUrl: "./httmap.component.html",
@@ -287,7 +290,7 @@ export class HttmapComponent implements OnInit {
     this.ctx1.clearRect(0, 0, this.width1, this.height1);
     // this.ctx1.shadowBlur = 100;
     this.ctx1.lineWidth = 1;
-    this.ctx1.beginPath(); 
+    this.ctx1.beginPath();
     // Staring point (10,45)
     this.ctx1.moveTo(50,100);
     // End point (180,47)
@@ -357,7 +360,7 @@ export class HttmapComponent implements OnInit {
     this.ctx2.clearRect(0, 0, this.width2, this.height2);
     this.ctx2.shadowBlur = 100;
     this.ctx2.lineWidth = 1;
-    this.ctx2.beginPath(); 
+    this.ctx2.beginPath();
     // Staring point (10,45)
     this.ctx2.moveTo(50,100);
     // End point (180,47)
@@ -434,7 +437,7 @@ export class HttmapComponent implements OnInit {
     this.ctx3.fillText("250 km/h", 100, 95);
      this.ctx3.lineWidth = 1;
     // this.ctx3.lineTo(55, 95);
-    this.ctx3.beginPath(); 
+    this.ctx3.beginPath();
     // Staring point (10,45)
     this.ctx3.moveTo(50,100);
     // End point (180,47)
@@ -486,7 +489,7 @@ export class HttmapComponent implements OnInit {
     }
     this.canvas4 = <HTMLCanvasElement>document.getElementById(bar_name);
     this.width4 = this.canvas4.width;
-    this.height4 = this.canvas4.height; 
+    this.height4 = this.canvas4.height;
     this.x4 = this.height4 / 2;
     this.y4 = this.width4 / 2;
     this.ctx4 = this.canvas4.getContext("2d");
@@ -503,7 +506,7 @@ export class HttmapComponent implements OnInit {
     this.ctx4.shadowBlur = 100;
     this.ctx4.fillText("90 km/h", 100, 95);
     this.ctx4.lineWidth = 1;
-    this.ctx4.beginPath(); 
+    this.ctx4.beginPath();
     // Staring point (10,45)
     this.ctx4.moveTo(50,100);
     // End point (180,47)
@@ -538,7 +541,7 @@ export class HttmapComponent implements OnInit {
     private httservice: HttService,
     private fb: FormBuilder,
     private ngZone: NgZone,
-    private http: Http,
+    private http: HttpClient,
     private spinner: NgxSpinnerService,
     element: ElementRef,
     public snackBar: MatSnackBar,
@@ -727,7 +730,8 @@ export class HttmapComponent implements OnInit {
       overviewMapControl: false,
       rotateControl: true,
       disableDefaultUI: true,
-      styles: MapCss.MAPCSS
+      styles: MapCss.MAPCSS,
+      mapId: 'AIzaSyCh-H9fxZXaR43dQQgg4FIwLWpAX2L5C7E'
     };
 
     this.map = new google.maps.Map(document.getElementById("googleMap"),this.mapProp);
@@ -767,7 +771,7 @@ export class HttmapComponent implements OnInit {
 
     var srcloc, srcLatlang;
 
-    var marker1 = new google.maps.Marker({
+    var marker1 = new google.maps.marker.AdvancedMarkerElement({
       map: map,
       position: { lat: 888999909000000, lng: 9999000099000 },
       icon: {
@@ -922,7 +926,7 @@ export class HttmapComponent implements OnInit {
         fillOpacity: 0.2,
         strokeWeight: 0.2
       }
-      
+
     });
 
     var marker4 = new google.maps.Marker({
@@ -1071,7 +1075,7 @@ export class HttmapComponent implements OnInit {
     });
   }
   onClick(event:Event){
-    
+
   }
 
   private calculateDistance() {
@@ -1182,7 +1186,8 @@ export class HttmapComponent implements OnInit {
         destination: this.destinationLocation
       })
       .subscribe(
-        data => {
+        (data: any) => {
+          console.log(data, 'data')
           setTimeout(() => {
             this.spinner.hide();
           }, 500);
@@ -1363,7 +1368,7 @@ export class HttmapComponent implements OnInit {
             geodesic: true
           });
           var image = "../../assets/images/capsulePointer.png";
-         
+
           this.animationMarker = new google.maps.Marker({
             position: {
               lat: 0.0,
@@ -1493,9 +1498,9 @@ export class HttmapComponent implements OnInit {
             this.spinner.hide();
           }, 500);
         }
-        
+
       );
-      
+
     this.errormsg = false;
   }
 
@@ -1515,7 +1520,7 @@ export class HttmapComponent implements OnInit {
     }, 40);
   };
 
-  
+
   getPrivousIndex() {
     if(this.index == 4){
       this.index--;
@@ -1583,7 +1588,7 @@ export class HttmapComponent implements OnInit {
       this.timesTabclicked = false;
       this.exampleTabClicked = true;
     }
-    
+
   }
 
   sidenavval1: any = false;
@@ -1693,11 +1698,11 @@ export class HttmapComponent implements OnInit {
     this.index = 0;
   }
 
-  travelTab() { 
+  travelTab() {
     $(".bottomwindow").css("display", "none");
     this.num = Math.floor(this.hyperloopTime/10);
     // console.log(this.hyperloopTime,'sffds');
-    
+
     this.exampleTabClicked = false;
     this.timesTabclicked = true;
     this.passengerTabClicked = false;
@@ -1798,5 +1803,5 @@ export class HttmapComponent implements OnInit {
     console.log("move right");
   }
 
-  
+
 }

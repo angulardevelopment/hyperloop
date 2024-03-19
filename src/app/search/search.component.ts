@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttService } from '../htt.service'
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+declare var  google;
 
 @Component({
   selector: 'app-search',
@@ -39,9 +40,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.hidesearch = true;
     this.play = true;
     // this.setWindow(window.innerWidth);
-  
+
   }
- 
+
 
   ngOnInit() {
     this.hidesearch = true;
@@ -53,7 +54,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // setTimeout(() => {
-     
+
     var srcLatlang, destLatlang;
     var src = this.source.nativeElement;
     var destination = this.destination.nativeElement;
@@ -176,7 +177,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
           // setTimeout(() => {
             this.play = true;
             this.distance = this.calculateDistance(this.srcLatlang, latlang)
-        
+
             if (this.distance >= 2500) {
               this.play = false;
             }

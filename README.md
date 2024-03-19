@@ -1,3 +1,10 @@
+agm/core angular/flex-layout agm-direction google/maps clipboard ngx-spinner
+bootstrap
+popper.js
+jquery
+angular/material
+ npm install clipboard --legacy-peer-deps
+
 # HyperloopGlobal
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
