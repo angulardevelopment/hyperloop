@@ -5,30 +5,84 @@ jquery
 angular/material
  npm install clipboard --legacy-peer-deps
 
-# HyperloopGlobal
+ new hyperloop ui
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
-## Development server
+signOut() {
+return new Promise((resolve, reject) => {
+gapi.auth2.getAuthInstance().signOut().then(resolve, reject);
+});
+}
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+Calling function
+handleSignoutClick() {
+this.handler.signOut().then((result) => {
+localStorage.removeItem('userinfo');
+this.router.navigateByUrl('/login');
+});
+}
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+40.112.165.32
+username : hyperlooptt
+password:Hyperloop@567 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+share
+ <!-- <label class="label">Share your route and follow us</label>
+      <div class="show" *ngIf="show">
+        <div class="smallrecta">
+          <label style="color:#44CBCE">Share</label>&nbsp;&nbsp;&nbsp;
 
-## Running unit tests
+          <a href="javascript:void(0)" (click)="twittershare()">
+            <img src="../../assets/images/twitter.svg" /></a>
+          <a href="javascript:void(0)" (click)="facebookshare()">
+            <img src="../../assets/images/facebook.svg" /></a>
+          <a href="javascript:void(0)" (click)="linkedInshare()">
+            <img class="linked" src="../../assets/images/linkedin.svg" /></a>
+          <a href="javascript:void(0)" (click)="copytxt()">
+            <img src="../../assets/images/share-icon.svg" /></a>
+          <a href="javascript:void(0)" (click)="emailshare()">
+            <img src="../../assets/images/email.svg" /></a>
+        </div>
+      </div>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+      <div class="row">
+        <div class="col-md-2" style="color:white;font-size: 1vw;">Share</div>
+        <div class="col-md-1">
+          <div *ngIf="show" class="smalltriangle"></div>
 
-## Running end-to-end tests
+          <img class="shareimage" (click)="show = !show" src="../../assets/images/share.svg" alt="" />
+          <!--
+            <img class="shareimage" src="../../assets/images/share.svg" alt="" />
+        
+        </div>
+        <div class="col-md-1">
+          <a href="javascript:void(0)">
+            <img class="dotline" src="../../assets/images/dottedline.svg" />
+          </a>
+        </div>
+        <div class="col-md-1 follow">Follow</div>
+        <div class="col-md-1">
+          <a href="javascript:void(0)">
+            <img class="twitter" (click)="twittershare()" src="../../assets/images/twitter.svg" /></a>
+        </div>
+        <div class="col-md-1">
+          <a href="javascript:void(0)">
+            <img class="facebook" (click)="facebookshare()" src="../../assets/images/facebook.svg" /></a>
+        </div>
+        <div class="col-md-1">
+          <a href="javascript:void(0)">
+            <img class="linked" src="../../assets/images/linkedin.svg" (click)="linkedInshare()" /></a>
+        </div>
+        <div class="col-md-1">
+          <a href="javascript:void(0)">
+            <img class="instagram" src="../../assets/images/instagram.svg" /></a>
+        </div>
+        <div class="col-md-1">
+          <a href="javascript:void(0)">
+            <img class="youtube" src="../../assets/images/youtube.svg" /></a>
+        </div>
+        <div class="col-md-1"></div>
+      </div> -->
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
