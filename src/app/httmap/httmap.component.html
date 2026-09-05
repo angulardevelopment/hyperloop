@@ -4,105 +4,112 @@
   color="#fff"
   loadingText="Loading..."
   type="ball-fussion"
->
+  >
 </ngx-spinner>
 
 <div class="container-fluid">
   <!-- <div id="centerwindow" *ngIf="!hidepopup">
-    <div class="pull-right">
-      <span
-        style="margin-right: 3px;margin-top: 3px; cursor: pointer"
-        (click)="hidepopup = true"
+  <div class="pull-right">
+    <span
+      style="margin-right: 3px;margin-top: 3px; cursor: pointer"
+      (click)="hidepopup = true"
       >
-        <img src="./../assets/images/close_white.png" height="17" width="17" />
-      </span>
-    </div>
-    <br />
-    <p id="actionbox">
-      Enter your route to see how fast Hyperloop TT can take you there.
-    </p>
-    <br />
-  </div> -->
-  <!-- Side pop-up for km to miles and vice-versa conversion -->
-  <div *ngIf="converter">
+      <img src="./../assets/images/close_white.png" height="17" width="17" />
+    </span>
+  </div>
+  <br />
+  <p id="actionbox">
+    Enter your route to see how fast Hyperloop TT can take you there.
+  </p>
+  <br />
+</div> -->
+<!-- Side pop-up for km to miles and vice-versa conversion -->
+@if (converter) {
+  <div>
     <div id="floating-panel">
       <div class="pull-right">
         <span
           style="margin-right: 3px;margin-top: 3px; cursor: pointer"
           (click)="converter = false"
-        >
+          >
           <img
             src="./../assets/images/close_white.png"
             height="20"
             width="20"
-          />
-        </span>
-      </div>
-      <div class="converter-box-text1">
-        <div>
-          Miles (mi) &nbsp;
-          <label class="switch">
-            <input type="checkbox" [(ngModel)]="distInKms" />
-            <span class="slider round"></span>
-          </label>
-          &nbsp; Kilometers (km)
+            />
+          </span>
+        </div>
+        <div class="converter-box-text1">
+          <div>
+            Miles (mi) &nbsp;
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="distInKms" />
+              <span class="slider round"></span>
+            </label>
+            &nbsp; Kilometers (km)
+          </div>
+        </div>
+        <div class="converter-box-text1">Emissions</div>
+        <div class="converter-box-text2 helptxt">
+          CO<sub>2</sub> emissions are measured in units of emissions per passenger mile
+          (g/pass-mi)
         </div>
       </div>
-      <div class="converter-box-text1">Emissions</div>
-      <div class="converter-box-text2 helptxt">
-        CO<sub>2</sub> emissions are measured in units of emissions per passenger mile
-        (g/pass-mi)
-      </div>
     </div>
-  </div>
+  }
   <!-- error msgs -->
   <!--
-    <div *ngIf="errormsg" class="errormsg">
-      <span class="triangle" style="top: 25.6%;right:86.2%;"> </span>
-      <p>{{ message }}</p>
-    </div>
+  <div *ngIf="errormsg" class="errormsg">
+    <span class="triangle" style="top: 25.6%;right:86.2%;"> </span>
+    <p>{{ message }}</p>
+  </div>
   -->
   <div class="leftPanel" [@slideInOut]="menuState" id="leftpanel">
 
-      <div *ngIf="exceedDistMsg" class="errormsg">
-          <div class="triangle"></div><br>
-          <div class="rect">
-            The current route simulation platform supports distances within 2500 km (1,500 miles).
-            While we keep evolving and optimizing the tool, please enter a shorter route.
-          </div>
+    @if (exceedDistMsg) {
+      <div class="errormsg">
+        <div class="triangle"></div><br>
+        <div class="rect">
+          The current route simulation platform supports distances within 2500 km (1,500 miles).
+          While we keep evolving and optimizing the tool, please enter a shorter route.
         </div>
+      </div>
+    }
 
 
     <div class="bar" (click)="sidenav(); converter = false">
       <a href="javascript:void(0)" style="right: 5px">
-        <img *ngIf="sidenavval" src="../../assets/images/arrow.svg" alt="" />
-        <img
-          *ngIf="!sidenavval"
-          src="../../assets/images/rightarrow.svg"
-          alt=""
-        />
+        @if (sidenavval) {
+          <img src="../../assets/images/arrow.svg" alt="" />
+        }
+        @if (!sidenavval) {
+          <img
+            src="../../assets/images/rightarrow.svg"
+            alt=""
+            />
+        }
       </a>
     </div>
     <div class="header">
       <div class="row" >
         <div class="col-md-11" [routerLink]="['/search']"  >
-         <a href=""> <img class="logo" src="../../assets/images/logo.svg" alt="" /></a>
+          <a href=""> <img class="logo" src="../../assets/images/logo.svg" alt="" /></a>
         </div>
         <div class="col-md-1">
           <a
             href="javascript:void(0)"
             (click)="converter = !converter"
             class="menu"
-          >
+            >
             <img class="info" src="../../assets/images/ico-info.svg" alt="" />
           </a>
         </div>
       </div>
     </div>
     <!--
-      <a href="javascript:void(0)" class="close-panel pull-right" *ngIf="!playroute">
-        <img src="./../assets/images/close_white.png" alt="" (click)="hideInputPanel()" />
-      </a>
+    <a href="javascript:void(0)" class="close-panel pull-right" *ngIf="!playroute">
+      <img src="./../assets/images/close_white.png" alt="" (click)="hideInputPanel()" />
+    </a>
     -->
 
     <div class="destinations">
@@ -119,1306 +126,1364 @@
               value=""
               formControlName="src"
               (input)="hidePopup(); hideerrorpopup()"
-            />
-          </div>
-          <div class="clear"></div>
-          <div class="line"></div>
-          <div class="clear"></div>
+              />
+            </div>
+            <div class="clear"></div>
+            <div class="line"></div>
+            <div class="clear"></div>
 
-          <div class="pull-left input ">
-            <!--
+            <div class="pull-left input ">
+              <!--
               <img class="km" src="../../assets/images/baseline-warning.svg" alt="" />
-            -->
-            <span class="km" *ngIf="distInKms">{{ hdistance }}km</span>
-            <span class="km" *ngIf="!distInKms">{{ hdistanceInMiles }}mi</span>
+              -->
+              @if (distInKms) {
+                <span class="km">{{ hdistance }}km</span>
+              }
+              @if (!distInKms) {
+                <span class="km">{{ hdistanceInMiles }}mi</span>
+              }
 
-            <!-- <img
+              <!-- <img
               *ngIf="errormsg"
               class="marker"
               src="../../assets/images/infoo.gif"
               alt=""
-            /> -->
+              /> -->
 
-            <input
-              #destination
-              type="text"
-              value=""
-              formControlName="dest"
-              (input)="hidePopup(); hideerrorpopup()"
-            />
-          </div>
-        </div>
-        <div class="reverse pull-left">
-          <a href="javascript:void(0)">
-            <img
-              src="../../assets/images/ico-swap.svg"
-              alt=""
-              (click)="swapSourceDest()"
-            /> </a
-          ><br />
-          <!--
-            <span  class="km" *ngIf="distInKms || mobilestate ">{{hdistance}}km</span>
-            <span class="km" *ngIf="!distInKms || mobilestate">{{hdistanceInMiles}}mi</span>
-          -->
-        </div>
-        <div class="clear"></div>
-      
-          <!-- <button
-            type="submit"
+              <input
+                #destination
+                type="text"
+                value=""
+                formControlName="dest"
+                (input)="hidePopup(); hideerrorpopup()"
+                />
+              </div>
+            </div>
+            <div class="reverse pull-left">
+              <a href="javascript:void(0)">
+                <img
+                  src="../../assets/images/ico-swap.svg"
+                  alt=""
+                  (click)="swapSourceDest()"
+                  /> </a
+                  ><br />
+                  <!--
+                  <span  class="km" *ngIf="distInKms || mobilestate ">{{hdistance}}km</span>
+                  <span class="km" *ngIf="!distInKms || mobilestate">{{hdistanceInMiles}}mi</span>
+                  -->
+                </div>
+                <div class="clear"></div>
+
+                <!-- <button
+                type="submit"
             [ngClass]="
               mobilestate || form.invalid  ||!playroute
                 ? ' ? btn primary-button playwh :btn primary-button playwwh'
                 : 'btn primary-button playwh '
             "
-            (click)="getRoutes()"
-          >
-            Play Route
-          </button> -->
-           <button
-            type="submit"
-           class="playroute"
-            (click)="getRoutes()"
-          >
-            Play Route
-          </button>
-        <div class="clear"></div>
-      </form>
-    </div>
+                (click)="getRoutes()"
+                >
+                Play Route
+              </button> -->
+              <button
+                type="submit"
+                class="playroute"
+                (click)="getRoutes()"
+                >
+                Play Route
+              </button>
+              <div class="clear"></div>
+            </form>
+          </div>
 
-    <div class="icons" *ngIf="!mobilestate">
-      <div class="navbar">
-        <ul>
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                style="background-color:#3a4450;"
-                *ngIf="!active"
-                src="../../assets/images/icon-left.svg"
-                alt=""
-                (click)="getPrivousIndex()"
-              />
-            </a>
-          </li>
-          <li >
-            <a href="javascript:void(0)">
-              <img
-                [ngClass]="!exampleTabClicked ? 'noactive' : 'active'"
-                (click)="exampleTab()"
-                src="../../assets/images/star.svg"
-                alt=""
-              />
-            </a>
-          </li>
+          @if (!mobilestate) {
+            <div class="icons">
+              <div class="navbar">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      @if (!active) {
+                        <img
+                          style="background-color:#3a4450;"
+                          src="../../assets/images/icon-left.svg"
+                          alt=""
+                          (click)="getPrivousIndex()"
+                          />
+                      }
+                    </a>
+                  </li>
+                  <li >
+                    <a href="javascript:void(0)">
+                      <img
+                        [ngClass]="!exampleTabClicked ? 'noactive' : 'active'"
+                        (click)="exampleTab()"
+                        src="../../assets/images/star.svg"
+                        alt=""
+                        />
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)">
+                        <img
+                          id="2"
+                          [ngClass]="!timesTabclicked ? 'noactive' : 'active'"
+                          (click)="travelTab()"
+                          src="../../assets/images/ico-time.svg"
+                          alt=""
+                          />
+                        </a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)">
+                          <img
+                            id="3"
+                            [ngClass]="!speedTabClicked ? 'noactive' : 'active'"
+                            (click)="speedTab()"
+                            class="chevron"
+                            src="../../assets/images/ico-speed.svg"
+                            alt=""
+                            />
+                          </a>
+                        </li>
+                        <li>
+                          <a href="javascript:void(0)">
+                            <img
+                              id="4"
+                              class="star"
+                              [ngClass]="!passengerTabClicked ? 'noactive' : 'active'"
+                              (click)="passengerTab()"
+                              src="../../assets/images/ico-passenger.svg"
+                              alt=""
+                              />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0)">
+                              <img
+                                id="5"
+                                [ngClass]="!coEmissionTabClicked ? 'noactive' : 'active'"
+                                (click)="coEmissionTab()"
+                                src="../../assets/images/ico-carbon.svg"
+                                alt=""
+                                />
+                              </a>
+                            </li>
+                            <li>
+                              <a href="javascript:void(0)">
+                                @if (!active) {
+                                  <img
+                                    style="background-color:#3a4450;"
+                                    src="../../assets/images/icon-right.svg"
+                                    alt=""
+                                    (click)="getNextIndex()"
+                                    />
+                                }
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    }
 
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                id="2"
-                [ngClass]="!timesTabclicked ? 'noactive' : 'active'"
-                (click)="travelTab()"
-                src="../../assets/images/ico-time.svg"
-                alt=""
-              />
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                id="3"
-                [ngClass]="!speedTabClicked ? 'noactive' : 'active'"
-                (click)="speedTab()"
-                class="chevron"
-                src="../../assets/images/ico-speed.svg"
-                alt=""
-              />
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                id="4"
-                class="star"
-                [ngClass]="!passengerTabClicked ? 'noactive' : 'active'"
-                (click)="passengerTab()"
-                src="../../assets/images/ico-passenger.svg"
-                alt=""
-              />
-            </a>
-          </li>
+                    @if (!playroute && mobilestate) {
+                      <div class="icons">
+                        <div class="navbar">
+                          <ul>
+                            <li (click)="getPrivousIndex()">
+                              <a href="javascript:void(0)">
+                                @if (!active) {
+                                  <img
+                                    style="background-color:#3a4450;"
+                                    src="../../assets/images/icon-left.svg"
+                                    alt=""
+                                    />
+                                }
+                              </a>
+                            </li>
+                            <li>
+                              <a href="javascript:void(0)">
+                                <img
+                                  [ngClass]="!exampleTabClicked ? 'noactive' : 'active'"
+                                  (click)="exampleTab()"
+                                  src="../../assets/images/star.svg"
+                                  alt=""
+                                  />
+                                </a>
+                              </li>`
+                              <li>
+                                <a href="javascript:void(0)">
+                                  <img
+                                    [ngClass]="!timesTabclicked ? 'noactive' : 'active'"
+                                    (click)="travelTab()"
+                                    src="../../assets/images/ico-time.svg"
+                                    alt=""
+                                    />
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="javascript:void(0)">
+                                    <img
+                                      [ngClass]="!speedTabClicked ? 'noactive' : 'active'"
+                                      (click)="speedTab()"
+                                      class="chevron"
+                                      src="../../assets/images/ico-speed.svg"
+                                      alt=""
+                                      />
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a href="javascript:void(0)">
+                                      <img
+                                        class="star"
+                                        [ngClass]="!passengerTabClicked ? 'noactive' : 'active'"
+                                        (click)="passengerTab()"
+                                        src="../../assets/images/ico-passenger.svg"
+                                        alt=""
+                                        />
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a href="javascript:void(0)">
+                                        <img
+                                          [ngClass]="!coEmissionTabClicked ? 'noactive' : 'active'"
+                                          (click)="coEmissionTab()"
+                                          src="../../assets/images/ico-carbon.svg"
+                                          alt=""
+                                          />
+                                        </a>
+                                      </li>
+                                      <li  (click)="getNextIndex()">
+                                        <a href="javascript:void(0)">
+                                          @if (!active) {
+                                            <img
+                                              style="background-color:#3a4450;"
+                                              src="../../assets/images/icon-right.svg"
+                                              alt=""
+                                              />
+                                          }
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              }
 
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                id="5"
-                [ngClass]="!coEmissionTabClicked ? 'noactive' : 'active'"
-                (click)="coEmissionTab()"
-                src="../../assets/images/ico-carbon.svg"
-                alt=""
-              />
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                style="background-color:#3a4450;"
-                *ngIf="!active"
-                src="../../assets/images/icon-right.svg"
-                alt=""
-                (click)="getNextIndex()"
-              />
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+                              <div class="scrollbar scrollbar-pink bordered-pink thin">
+                                <div class="tools force-overflow">
+                                  @if (exampleTabClicked) {
+                                    <div class="tabChanges">
+                                      <h5 class="title">Or select predefined routes</h5>
+                                      <br />
+                                      <button class="p-button" type="submit" (click)="drawRouteLinkOne()">
+                                        Los Angeles <img src="../../assets/images/ico-pin.svg" alt="" /> San
+                                        Francisco
+                                      </button>
+                                      <br />
+                                      <br />
+                                      <div class="clear"></div>
+                                      <button type="submit" class="p-button" (click)="drawRouteLinkTwo()">
+                                        Shanghai
+                                        <img src="../../assets/images/ico-pin.svg" alt="" /> Beijing
+                                      </button>
+                                      <br />
+                                      <br />
+                                      <button type="submit" class="p-button" (click)="drawRouteLinkThree()">
+                                        Sao Paulo <img src="../../assets/images/ico-pin.svg" alt="" />Rio de
+                                        Janeiro
+                                      </button>
+                                      <br />
+                                      <br />
+                                      <button type="submit" class="p-button" (click)="drawRouteLinkFour()">
+                                        London
+                                        <img src="../../assets/images/ico-pin.svg" alt="" /> Paris
+                                      </button>
+                                      <br />
+                                      <br />
+                                    </div>
+                                  }
 
-    <div class="icons" *ngIf="!playroute && mobilestate">
-      <div class="navbar">
-        <ul>
-          <li (click)="getPrivousIndex()">
-            <a href="javascript:void(0)">
-              <img
-                style="background-color:#3a4450;"
-                *ngIf="!active"
-                src="../../assets/images/icon-left.svg"
-                alt=""
-              />
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                [ngClass]="!exampleTabClicked ? 'noactive' : 'active'"
-                (click)="exampleTab()"
-                src="../../assets/images/star.svg"
-                alt=""
-              />
-            </a>
-          </li>`
-
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                [ngClass]="!timesTabclicked ? 'noactive' : 'active'"
-                (click)="travelTab()"
-                src="../../assets/images/ico-time.svg"
-                alt=""
-              />
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                [ngClass]="!speedTabClicked ? 'noactive' : 'active'"
-                (click)="speedTab()"
-                class="chevron"
-                src="../../assets/images/ico-speed.svg"
-                alt=""
-              />
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                class="star"
-                [ngClass]="!passengerTabClicked ? 'noactive' : 'active'"
-                (click)="passengerTab()"
-                src="../../assets/images/ico-passenger.svg"
-                alt=""
-              />
-            </a>
-          </li>
-
-          <li>
-            <a href="javascript:void(0)">
-              <img
-                [ngClass]="!coEmissionTabClicked ? 'noactive' : 'active'"
-                (click)="coEmissionTab()"
-                src="../../assets/images/ico-carbon.svg"
-                alt=""
-              />
-            </a>
-          </li>
-          <li  (click)="getNextIndex()">
-            <a href="javascript:void(0)">
-              <img
-                style="background-color:#3a4450;"
-                *ngIf="!active"
-                src="../../assets/images/icon-right.svg"
-                alt=""
-              
-              />
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="scrollbar scrollbar-pink bordered-pink thin">
-      <div class="tools force-overflow">
-        <div class="tabChanges" *ngIf="exampleTabClicked">
-          <h5 class="title">Or select predefined routes</h5>
-          <br />
-
-          <button class="p-button" type="submit" (click)="drawRouteLinkOne()">
-            Los Angeles <img src="../../assets/images/ico-pin.svg" alt="" /> San
-            Francisco
-          </button>
-          <br />
-          <br />
-          <div class="clear"></div>
-          <button type="submit" class="p-button" (click)="drawRouteLinkTwo()">
-            Shanghai
-            <img src="../../assets/images/ico-pin.svg" alt="" /> Beijing
-          </button>
-          <br />
-          <br />
-          <button type="submit" class="p-button" (click)="drawRouteLinkThree()">
-            Sao Paulo <img src="../../assets/images/ico-pin.svg" alt="" />Rio de
-            Janeiro
-          </button>
-          <br />
-          <br />
-          <button type="submit" class="p-button" (click)="drawRouteLinkFour()">
-            London
-            <img src="../../assets/images/ico-pin.svg" alt="" /> Paris
-          </button>
-          <br />
-          <br />
-        </div>
-
-        <div class="timesTab" *ngIf="timesTabclicked">
-          <h5 class="traveltimetitle">Travel Times</h5>
-          <div class="row">
-            <div class="col-md-5">
-              <span class="vl" style="margin-left: 50%;">
-                <p class="min">= 10 min</p>
-              </span>
-            </div>
-            <div class="col-md-5">
-              <span class="vl2" style="margin-left: 22%;">
-                <p class="mins">= Transit time</p>
-              </span>
-            </div>
-            <div class="timerect">
+                                  @if (timesTabclicked) {
+                                    <div class="timesTab">
+                                      <h5 class="traveltimetitle">Travel Times</h5>
+                                      <div class="row">
+                                        <div class="col-md-5">
+                                          <span class="vl" style="margin-left: 50%;">
+                                            <p class="min">= 10 min</p>
+                                          </span>
+                                        </div>
+                                        <div class="col-md-5">
+                                          <span class="vl2" style="margin-left: 22%;">
+                                            <p class="mins">= Transit time</p>
+                                          </span>
+                                        </div>
+                                        <div class="timerect">
               <span style="color:black; padding:10px;width: 18vw;
               height: 6vw;">
-                <div class="triangle-up"></div>
-                Travel times are approximate and include airplane security
-                check,an boarding,de planing, and ticketing and refueling for
-                trains and cars respetively
-              </span>
-              <div class="col-md-2" style="position: absolute;min-width: 30%;">
-                <img
-                  alt=""
-                  style="width: 1vw;margin-top: -3px;"
-                  src="../../assets/images/ico-tooltip.svg"
-                />
-              </div>
-            </div>
-          </div>
+                                            <div class="triangle-up"></div>
+                                            Travel times are approximate and include airplane security
+                                            check,an boarding,de planing, and ticketing and refueling for
+                                            trains and cars respetively
+                                          </span>
+                                          <div class="col-md-2" style="position: absolute;min-width: 30%;">
+                                            <img
+                                              alt=""
+                                              style="width: 1vw;margin-top: -3px;"
+                                              src="../../assets/images/ico-tooltip.svg"
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="row timesrow ">
+                                          <div class="col-md-1"></div>
+                                          <div class="col-md-3 ">
+                                            <img
+                                              src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                              alt=""
+                                              />
+                                            </div>
+                                            <!-- <div class="col-md-1"></div> -->
+                                            <div class="col-md-5">
+                                              <span style="color:aqua;font-size:1.1vw;">HyperloopTT</span>
+                                            </div>
+                                          </div>
+                                          <div class="row ">
+                                            <div class="col-md-2"></div>
+                                            <div
+                                              class="col-md-2"
+                                              style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1.1vw"
+                                              >
+                                              {{ hyperloopTime }}m
+                                            </div>
+                                            <!-- <div class="col-md-1"></div> -->
+                                            <div
+                                              class="col-md-1"
+                                              style="border-bottom: 1px solid #44CBCE;"
+                                            ></div>
+                                            @for (i of Arr(num); track i) {
+                                              <div  style="border-bottom: 1px solid #44CBCE" >
+                                                <span class="vl" ></span>
+                                              </div>
+                                            }
+                                          </div>
+                                          <br>
+                                            <div class="row timesrow">
+                                              <div class="col-md-1"></div>
+                                              <div class="col-md-3 ">
+                                                <img src="../../assets/images/airplane.svg" alt="" />
+                                              </div>
+                                              <!-- <div class="col-md-1"></div> -->
+                                              <div class="col-md-6">
+                                                <span style="color:aqua;font-size:1.1vw;">Airplane</span>
+                                              </div>
+                                            </div>
+                                            <div class="row ">
+                                              <div class="col-md-2"></div>
+                                              <div
+                                                class="col-md-2"
+                                                style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1vw"
+                                                >
+                                                {{ airplanTime }} h
+                                              </div>
+                                              <!-- <div class="col-md-1"></div> -->
+                                              <div
+                                                class="col-md-1"
+                                                style="border-bottom: 1px solid #44CBCE;"
+                                              ></div>
+                                              @for (i of Arr(num1); track i) {
+                                                <div style="border-bottom: 1px solid #44CBCE"  >
+                                                  <span
+                                                    class="vl"
+                                                  ></span>
+                                                </div>
+                                              }
+                                            </div>
+                                            <br>
+                                              <div class="row timesrow">
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-3">
+                                                  <img src="../../assets/images/train.svg" alt="" />
+                                                </div>
+                                                <!-- <div class="col-md-1"></div> -->
+                                                <div class="col-md-6">
+                                                  <span style="color:aqua;font-size:1.1vw;">Train</span>
+                                                </div>
+                                              </div>
+                                              <div class="row ">
+                                                <div class="col-md-2"></div>
+                                                <div
+                                                  class="col-md-2"
+                                                  style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1.1vw"
+                                                  >
+                                                  <!-- {{PTTime}} -->
+                                                  @if (!PTTime) {
+                                                    <div>0 m</div>
+                                                  }
+                                                  @if (PTTime) {
+                                                    <div>
+                                                      @for (pt of PTTime; track pt; let i = $index) {
+                                                        <span
+                                                          [class.helptxt]="i % 2 !== 0"
+                                                          >
+                                                          {{
+                                                          pt === "hours"
+                                                          ? "h"
+                                                          : pt === "hour"
+                                                          ? "h"
+                                                          : pt == "mins"
+                                                          ? "m"
+                                                          : pt
+                                                          }}
+                                                        </span>
+                                                      }
+                                                    </div>
+                                                  }
+                                                </div>
+                                                <!-- <div class="col-md-1"></div> -->
+                                                <div
+                                                  class="col-md-1"
+                                                  style="border-bottom: 1px solid #44CBCE;"
+                                                ></div>
+                                                @for (i of Arr(num2); track i) {
+                                                  <div style="border-bottom: 1px solid #44CBCE">
+                                                    <span
+                                                      class="vl"
+                                                    ></span>
+                                                  </div>
+                                                }
+                                              </div>
+                                              <br>
+                                                <div class="row timesrow">
+                                                  <div class="col-md-1"></div>
+                                                  <div class="col-md-3">
+                                                    <img src="../../assets/images/car.svg" alt="" />
+                                                  </div>
+                                                  <!-- <div class="col-md-1"></div> -->
+                                                  <div class="col-md-6" >
+                                                    <span style="color:aqua;font-size:1.1vw">Car</span>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="col-md-2"></div>
+                                                  <div
+                                                    class="col-md-2"
+                                                    style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1vw"
+                                                    >
+                                                    <!-- {{drivingTime}} -->
+                                                    @if (!drivingTime) {
+                                                      <div>0 m</div>
+                                                    }
+                                                    @if (drivingTime) {
+                                                      <div>
+                                                        @for (dt of drivingTime; track dt; let i = $index) {
+                                                          <span
+                                                            [class.helptxt]="i % 2 !== 0"
+                                                            >
+                                                            {{
+                                                            dt === "hours"
+                                                            ? "h"
+                                                            : dt === "hour"
+                                                            ? "h"
+                                                            : dt == "mins"
+                                                            ? "m"
+                                                            : dt
+                                                            }}</span
+                                                            >
+                                                        }
+                                                      </div>
+                                                    }
+                                                  </div>
+                                                  <!-- <div class="col-md-1"></div> -->
+                                                  <div
+                                                    class="col-md-1"
+                                                    style="border-bottom: 1px solid #44CBCE;"
+                                                  ></div>
+                                                  @for (i of Arr(num3); track i) {
+                                                    <div style="border-bottom: 1px solid #44CBCE;">
+                                                      <span
+                                                        class="vl"
+                                                        >
+                                                      </span>
+                                                    </div>
+                                                  }
+                                                </div>
+                                                <hr style="border-bottom: 1px solid #44cbce;">
+                                              </div>
+                                            }
 
-          <div class="row timesrow ">
-            <div class="col-md-1"></div>
-            <div class="col-md-3 ">
-              <img
-                src="../../assets/images/capsule-compressed-02-copy-2.svg"
-                alt=""
-              />
-            </div>
-            <!-- <div class="col-md-1"></div> -->
-            <div class="col-md-5">
-              <span style="color:aqua;font-size:1.1vw;">HyperloopTT</span>
-            </div>
-          </div>
-          <div class="row ">
-            <div class="col-md-2"></div>
-            <div
-              class="col-md-2"
-              style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1.1vw"
-            >
-              {{ hyperloopTime }}m
-            </div>
-            <!-- <div class="col-md-1"></div> -->
-            <div
-              class="col-md-1"
-              style="border-bottom: 1px solid #44CBCE;"
-            ></div>
-            <div  style="border-bottom: 1px solid #44CBCE"  *ngFor="let i of Arr(num)">
-              <span class="vl" ></span>
-            </div>
-          </div>
-          <br>
-          <div class="row timesrow">
-            <div class="col-md-1"></div>
-            <div class="col-md-3 ">
-              <img src="../../assets/images/airplane.svg" alt="" />
-            </div>
-            <!-- <div class="col-md-1"></div> -->
-            <div class="col-md-6">
-              <span style="color:aqua;font-size:1.1vw;">Airplane</span>
-            </div>
-          </div>
-        
-          <div class="row ">
-            <div class="col-md-2"></div>
-            <div
-              class="col-md-2"
-              style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1vw"
-            >
-              {{ airplanTime }} h
-            </div>
-            <!-- <div class="col-md-1"></div> -->
-            <div
-              class="col-md-1"
-              style="border-bottom: 1px solid #44CBCE;"
-            ></div>
-            <div style="border-bottom: 1px solid #44CBCE"   *ngFor="let i of Arr(num1)">
-              <span
-                class="vl"
-              ></span>
-            </div>
-          </div>
-          <br>
-        
 
-          <div class="row timesrow">
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
-              <img src="../../assets/images/train.svg" alt="" />
-            </div>
-            <!-- <div class="col-md-1"></div> -->
-            <div class="col-md-6">
-              <span style="color:aqua;font-size:1.1vw;">Train</span>
-            </div>
-          </div>
-         
-          <div class="row ">
-            <div class="col-md-2"></div>
-            <div
-              class="col-md-2"
-              style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1.1vw"
-            >
-              <!-- {{PTTime}} -->
-              <div *ngIf="!PTTime">0 m</div>
-              <div *ngIf="PTTime">
-                <span
-                  *ngFor="let pt of PTTime; let i = index"
-                  [class.helptxt]="i % 2 !== 0"
-                >
-                  {{
-                    pt === "hours"
-                      ? "h"
-                      : pt === "hour"
-                      ? "h"
-                      : pt == "mins"
-                      ? "m"
-                      : pt
-                  }}
-                </span>
-              </div>
-            </div>
-            <!-- <div class="col-md-1"></div> -->
-            <div
-              class="col-md-1"
-              style="border-bottom: 1px solid #44CBCE;"
-            ></div>
-            <div style="border-bottom: 1px solid #44CBCE" *ngFor="let i of Arr(num2)">
-              <span
-                class="vl"
-              ></span>
-            </div>
-          </div>
-          <br>
+                                            @if (speedTabClicked) {
+                                              <div class="speedChanges">
+                                                <h5 id="speed">Top Speed</h5>
+                                                <div class="row">
+                                                  <div class="col-md-6">
+                                                    <img id="maxspeed" src="../../assets/images/maxspeed.svg" />
+                                                    <p class="min">= Max Speed</p>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                    <img id="actual" src="../../assets/images/actualspeed.svg" />
+                                                    <p class="mins">= Average Speed</p>
+                                                  </div>
+                                                </div>
+                                                <div id="speedometer">
+                                                  <div class="row">
+                                                    <img
+                                                      class="speedimg"
+                                                      src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                      alt=""
+                                                      height="15"
+                                                      width="40"
+                                                      />&nbsp;
+                                                      @if (!playroute) {
+                                                        <canvas
+                                                          id="bar11"
+                                                          width="350"
+                                                          height="350"
+                                                        ></canvas>
+                                                      }
+                                                    </div>
+                                                    <div class="row">
+                                                      <img
+                                                        class="speedimg"
+                                                        src="../../assets/images/airplane.svg"
+                                                        alt=""
+                                                        height="15"
+                                                        width="40"
+                                                        />&nbsp;
+                                                        @if (!playroute) {
+                                                          <canvas
+                                                            id="bar21"
+                                                            width="310"
+                                                            height="350"
+                                                          ></canvas>
+                                                        }
+                                                      </div>
+                                                      <div class="row">
+                                                        <img
+                                                          class="speedimg"
+                                                          src="../../assets/images/train.svg"
+                                                          alt=""
+                                                          height="15"
+                                                          width="40"
+                                                          />&nbsp;&nbsp;
+                                                          @if (!playroute) {
+                                                            <canvas
+                                                              id="bar31"
+                                                              width="275"
+                                                              height="350"
+                                                            ></canvas>
+                                                          }
+                                                        </div>
+                                                        <div class="row">
+                                                          <img
+                                                            class="speedimg"
+                                                            src="../../assets/images/car.svg"
+                                                            alt=""
+                                                            height="15"
+                                                            width="40"
+                                                            />&nbsp;&nbsp;
+                                                            @if (!playroute) {
+                                                              <canvas
+                                                                id="bar41"
+                                                                width="245"
+                                                                height="350"
+                                                              ></canvas>
+                                                            }
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    }
+                                                    @if (passengerTabClicked) {
+                                                      <div class="timesTab1">
+                                                        <div class="row">
+                                                          <div class="col-md-8">
+                                                            <h4 id="speed1">Total Passengers</h4>
+                                                            <!-- <h6 id="Passenger">Total Passengers</h6> -->
+                                                          </div>
+                                                          <div class="manrect">
+                                                            <span style="color:black;">
+                                                              <div class="mantriangle-up"></div>
+                                                              Total passengers are the approximate number of passengers
+                                                              transported over the maximum time that it takes for the slowest
+                                                              mode of transportation(in most cases the car).
+                                                            </span>
+                                                            <div class="col-md-4" style="position: absolute;min-width: 30%;">
+                                                              <img
+                                                                alt=""
+                                                                id="information"
+                                                                src="../../assets/images/ico-tooltip.svg"
+                                                                />
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <div class="passenger">
+                                                            <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
+                                                            <span style="color:#d8d8d8;font-size: 1.2vw;margin-left:-6%;"
+                                                              >= 25 Passengers </span
+                                                              ><br />
+                                                              <div class="row">
+                                                                <div class="col-md-6"><h5 class="driving">Driving Time</h5></div>
+                                                                <div class="col-md-6" style="	margin-left: -10%;">
+                                                                  <span class="vertical"></span>&nbsp;
+                                                                  <button  (click)="onClick($event)"> <a class="daily" >Daily </a>&nbsp;</button>
+                                                                  <span class="vertical"></span>&nbsp;
+                                                                  <button><a class="daily" >Hourly</a></button>
+                                                                </div>
+                                                              </div>
+                                                              <br/>
+                                                            </div>
+                                                            <div class="head" >
+                                                              <img
+                                                                class="pull-left"
+                                                                src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                alt=""
+                                                                />
+                                                                <span class="pass-icon">HyperloopTT</span>
+                                                                <div class="row">
+                                                                  <span class="col-md-1"> </span>
+                                                                  <span class="hyperrounded">
+                                                                    <img
+                                                                      style="margin-top:-3%;margin-left: 3%;"
+                                                                      src="../../assets/images/ico-passenger.svg"
+                                                                      alt=""
+                                                                      />
+                                                                      <span style="float:right;margin-top: -42%;"> 2,500</span>
+                                                                    </span>
+                                                                    <span class="manimg">
+                                                                      <div class="row">
+                                                                        @for (i of Arr(num4); track i) {
+                                                                          <div class="column1">
+                                                                            <img
+                                                                              class="man"
+                                                                              style="margin-right: 4%;"
+                                                                              src="../../assets/images/ico-ppl.svg"
+                                                                              alt=""
+                                                                              />
+                                                                            </div>
+                                                                          }
+                                                                        </div>
+                                                                      </span>
+                                                                    </div>
+                                                                  </div>
+                                                                  <br />
+                                                                  <div class="head">
+                                                                    <img class="pull-left" src="../../assets/images/airplane.svg" alt="" />
+                                                                    <span class="pass-icon">Airplane</span>
+                                                                    <div class="row">
+                                                                      <span class="col-md-1"> </span>
+                                                                      <span class="col-md-2" class="hyperrounded">
+                                                                        <span>
+                                                                          <img
+                                                                            style="margin-top:-3%;margin-left: 5%;"
+                                                                            src="../../assets/images/ico-passenger.svg"
+                                                                            alt=""
+                                                                            />
+                                                                          </span>
+                                                                          <span style="float:right"> 500</span>
+                                                                        </span>
+                                                                        <span class="manimg">
+                                                                          <div class="row">
+                                                                            @for (i of Arr(num5); track i) {
+                                                                              <div class="column1">
+                                                                                <img
+                                                                                  class="man"
+                                                                                  src="../../assets/images/ico-ppl.svg"
+                                                                                  alt=""
+                                                                                  />
+                                                                                </div>
+                                                                              }
+                                                                            </div>
+                                                                          </span>
+                                                                        </div>
+                                                                      </div>
+                                                                      <br />
+                                                                      <div class="head">
+                                                                        <img class="pull-left" src="../../assets/images/train.svg" alt="" />
+                                                                        <span class="pass-icon">train</span>
+                                                                        <div class="row">
+                                                                          <span class="col-md-1"> </span>
+                                                                          <span class="col-md-2" class="hyperrounded">
+                                                                            <span>
+                                                                              <img
+                                                                                style="margin-top:-3%;margin-left: 3%;"
+                                                                                src="../../assets/images/ico-passenger.svg"
+                                                                                alt=""
+                                                                                />
+                                                                              </span>
+                                                                              <span style="float:right">672</span>
+                                                                            </span>
+                                                                            <span class="manimg">
+                                                                              <div class="row">
+                                                                                @for (i of Arr(num3); track i) {
+                                                                                  <div class="column1">
+                                                                                    <img
+                                                                                      class="man"
+                                                                                      src="../../assets/images/ico-ppl.svg"
+                                                                                      alt=""
+                                                                                      />
+                                                                                    </div>
+                                                                                  }
+                                                                                  <div class="column1">
+                                                                                    <img
+                                                                                      style="width:1.5vw;"
+                                                                                      src="../../assets/images/halfman.gif"
+                                                                                      alt=""
+                                                                                      />
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </span>
+                                                                              </div>
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="head">
+                                                                              <img class="pull-left" src="../../assets/images/car.svg" alt="" />
+                                                                              <span class="pass-icon">Car</span>
+                                                                              <div class="row">
+                                                                                <span class="col-md-1"> </span>
+                                                                                <span class="col-md-2" class="hyperrounded">
+                                                                                  <span>
+                                                                                    <img
+                                                                                      style="margin-top:-3%;margin-left: 3%;"
+                                                                                      src="../../assets/images/ico-passenger.svg"
+                                                                                      alt=""
+                                                                                      />
+                                                                                    </span>
+                                                                                    <span style="float:right">4</span>
+                                                                                  </span>
+                                                                                  <span class="manimg">
+                                                                                    <div class="row">
+                                                                                      <div class="column1">
+                                                                                        <img
+                                                                                          style="width:1.5vw;"
+                                                                                          src="../../assets/images/man1.gif"
+                                                                                          alt=""
+                                                                                          />
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </span>
+                                                                                  </div>
+                                                                                </div>
+                                                                                <br />
+                                                                              </div>
+                                                                            }
 
-          <div class="row timesrow">
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
-              <img src="../../assets/images/car.svg" alt="" />
-            </div>
+                                                                            @if (coEmissionTabClicked) {
+                                                                              <div class="timesTab2">
+                                                                                <div class="row">
+                                                                                  <div class="col-md-8">
+                                                                                    <h4 id="speed1">Carbon Emissions</h4>
+                                                                                    <!-- <h6 id="Passenger">Total Passengers</h6> -->
+                                                                                  </div>
+                                                                                  <div class="co2rect">
+                                                                                    <span style="color:black;">
+                                                                                      <div class="co2triangle-up"></div>
+                                                                                      co <sub>2</sub> emission refers to the amount of co <sub>2</sub> emitted over the
+                                                                                      duration of the trip by transportation type. Numbers are
+                                                                                      approximate.
+                                                                                    </span>
+                                                                                    <div class="col-md-4" style="position: absolute;min-width: 30%;">
+                                                                                      <img
+                                                                                        alt=""
+                                                                                        style="margin-top: 0.8vw;width:1vw;margin-left: 0.5vw;"
+                                                                                        src="../../assets/images/ico-tooltip.svg"
+                                                                                        />
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                  <h6>Grams of CO<sub>2</sub> per kilometer</h6>
+                                                                                  <br />
+                                                                                  <div class="head">
+                                                                                    <img
+                                                                                      class="pull-left"
+                                                                                      src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                      alt=""
+                                                                                      />
+                                                                                      <span class="pass-icon">HyperloopTT</span> <br />
+                                                                                      <div class="row">
+                                                                                        <span class="col-md-1"> </span>
+                                                                                        <span
+                                                                                          class="col-md-2"
+                                                                                          class="carbonhyperrounded"
+                                                                                          style="text-align:center;font-size: 1vw;"
+                                                                                          >
+                                                                                        &nbsp; &nbsp; <10 g </span>
+                                                                                        <span class="col-md-8 co2text">
+                                                                                          The HyperloopTT system is powered by a combination of
+                                                                                          alternative energy sources
+                                                                                        </span>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                    <br />
+                                                                                    <div class="head">
+                                                                                      <img
+                                                                                        class="pull-left"
+                                                                                        src="../../assets/images/airplane.svg"
+                                                                                        alt=""
+                                                                                        />
+                                                                                        <span class="pass-icon">Airplane</span> <br />
+                                                                                        <div class="co2Rounded">45-60 g</div>
+                                                                                        <span
+                                                                                          class="progress-bar primary-button"
+                                                                                          style="transition: width 2s;width:20%;margin-top:-5%;margin-left:32%;"
+                                                                                        ></span>
+                                                                                      </div>
+                                                                                      <div class="head">
+                                                                                        <img class="pull-left" src="../../assets/images/train.svg" alt="" />
+                                                                                        <span class="pass-icon">Train</span> <br />
+                                                                                        <div class="co2Rounded">15-30 g</div>
+                                                                                        <span
+                                                                                          class="progress-bar primary-button"
+                                                                                          style="transition: width 2s;width:8%;margin-top:-5%;margin-left:32%;"
+                                                                                        ></span>
+                                                                                      </div>
+                                                                                      <div class="head">
+                                                                                        <img class="pull-left" src="../../assets/images/car.svg" alt="" />
+                                                                                        <span class="pass-icon">Car</span> <br />
+                                                                                        <div class="co2Rounded">10-150 g</div>
+                                                                                        <span
+                                                                                          class="progress-bar primary-button"
+                                                                                          style="transition: width 2s;width:4%;margin-top:-5%;margin-left:32%;"
+                                                                                        ></span>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  }
+                                                                                  <span class="hyperloopimg">
+                                                                                    <span class="title"><a href="http://www.hyperloop.global">Related Stories</a> </span>
+                                                                                    <img src="../../assets/images/HyperloopTT Tube 1.jpg" alt="" />
+                                                                                  </span>
+                                                                                </div>
+                                                                              </div>
 
-            <!-- <div class="col-md-1"></div> -->
-            <div class="col-md-6" >
-              <span style="color:aqua;font-size:1.1vw">Car</span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-2"></div>
-            <div
-              class="col-md-2"
-              style="border-bottom: 1px solid #44CBCE;text-align: right;font-size: 1vw"
-            >
-              <!-- {{drivingTime}} -->
-              <div *ngIf="!drivingTime">0 m</div>
-              <div *ngIf="drivingTime">
-                <span
-                  *ngFor="let dt of drivingTime; let i = index"
-                  [class.helptxt]="i % 2 !== 0"
-                >
-                {{
-                  dt === "hours"
-                    ? "h"
-                    : dt === "hour"
-                    ? "h"
-                    : dt == "mins"
-                    ? "m"
-                    : dt
-                }}</span
-                >
-              </div>
-            </div>
-            <!-- <div class="col-md-1"></div> -->
-            <div
-              class="col-md-1"
-              style="border-bottom: 1px solid #44CBCE;"
-            ></div>
-            <div style="border-bottom: 1px solid #44CBCE;" *ngFor="let i of Arr(num3)">
-              <span
-                class="vl"
-              >
-              </span>
-            </div>
-          </div>
+                                                                              <div class="social">
+                                                                                <app-social
+                                                                                  [source]="sourceLocation"
+                                                                                  [destination]="destinationLocation"
+                                                                                ></app-social>
+                                                                              </div>
+                                                                            </div>
 
-          <hr style="border-bottom: 1px solid #44cbce;">
-        </div>
-     
+                                                                            <!--
+                                                                            <div class="bar" (click)="sidenav(); converter=false" *ngIf="sidenavval1">
+                                                                              <a href="javascript:void(0)" style="right: 5px">
+                                                                                <img *ngIf="sidenavval" src="../../assets/images/arrow.svg" alt="" />
+                                                                                <img *ngIf="!sidenavval" src="../../assets/images/rightarrow.svg" alt="" />
+                                                                              </a>
+                                                                            </div>
+                                                                            -->
+                                                                            <div
+                                                                              id="googleMap"
+                                                                              style="width:100%;height:100%;position:absolute; z-index: 0;"
+                                                                            ></div>
+                                                                            <div id="infowindow-content">
+                                                                              <span id="place-name" class="title"></span> <span id="place-id"></span>
+                                                                              <br />
+                                                                              <span id="place-address"></span>
+                                                                            </div>
+                                                                          </div>
 
-        <div class="speedChanges" *ngIf="speedTabClicked">
-          <h5 id="speed">Top Speed</h5>
-
-          <div class="row">
-            <div class="col-md-6">
-              <img id="maxspeed" src="../../assets/images/maxspeed.svg" />
-
-              <p class="min">= Max Speed</p>
-            </div>
-            <div class="col-md-6">
-              <img id="actual" src="../../assets/images/actualspeed.svg" />
-              <p class="mins">= Average Speed</p>
-            </div>
-          </div>
-
-          <div id="speedometer">
-            <div class="row">
-              <img
-                class="speedimg"
-                src="../../assets/images/capsule-compressed-02-copy-2.svg"
-                alt=""
-                height="15"
-                width="40"
-              />&nbsp;
-
-              <canvas 
-                *ngIf="!playroute"
-                id="bar11"
-                width="350"
-                height="350"
-              ></canvas>
-            </div>
-            <div class="row">
-              <img
-                class="speedimg"
-                src="../../assets/images/airplane.svg"
-                alt=""
-                height="15"
-                width="40"
-              />&nbsp;
-              <canvas 
-                *ngIf="!playroute"
-                id="bar21"
-                width="310"
-                height="350"
-              ></canvas>
-            </div>
-            <div class="row">
-              <img
-                class="speedimg"
-                src="../../assets/images/train.svg"
-                alt=""
-                height="15"
-                width="40"
-              />&nbsp;&nbsp;
-              <canvas
-                *ngIf="!playroute"
-                id="bar31"
-                width="275"
-                height="350"
-              ></canvas>
-            </div>
-            <div class="row">
-              <img
-                class="speedimg"
-                src="../../assets/images/car.svg"
-                alt=""
-                height="15"
-                width="40"
-              />&nbsp;&nbsp;
-              <canvas
-                *ngIf="!playroute"
-                id="bar41"
-                width="245"
-                height="350"
-              ></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="timesTab1" *ngIf="passengerTabClicked">
-          <div class="row">
-            <div class="col-md-8">
-              <h4 id="speed1">Total Passengers</h4>
-              <!-- <h6 id="Passenger">Total Passengers</h6> -->
-            </div>
-            <div class="manrect">
-              <span style="color:black;">
-                <div class="mantriangle-up"></div>
-                Total passengers are the approximate number of passengers
-                transported over the maximum time that it takes for the slowest
-                mode of transportation(in most cases the car).
-              </span>
-              <div class="col-md-4" style="position: absolute;min-width: 30%;">
-                <img
-                  alt=""
-                  id="information"
-                  src="../../assets/images/ico-tooltip.svg"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="passenger">
-            <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
-            <span style="color:#d8d8d8;font-size: 1.2vw;margin-left:-6%;"
-              >= 25 Passengers </span
-            ><br />
-            <div class="row">
-              <div class="col-md-6"><h5 class="driving">Driving Time</h5></div>
-
-              <div class="col-md-6" style="	margin-left: -10%;">
-                <span class="vertical"></span>&nbsp;
-               <button  (click)="onClick($event)"> <a class="daily" >Daily </a>&nbsp;</button>
-                <span class="vertical"></span>&nbsp;
-                <button><a class="daily" >Hourly</a></button>
-              </div>
-            </div>
-            <br/>
-          </div>
-          <div class="head" >
-            <img
-              class="pull-left"
-              src="../../assets/images/capsule-compressed-02-copy-2.svg"
-              alt=""
-            />
-            <span class="pass-icon">HyperloopTT</span>
-            <div class="row">
-              <span class="col-md-1"> </span>
-              <span class="hyperrounded">
-                <img
-                  style="margin-top:-3%;margin-left: 3%;"
-                  src="../../assets/images/ico-passenger.svg"
-                  alt=""
-                />
-                <span style="float:right;margin-top: -42%;"> 2,500</span>
-              </span>
-              <span class="manimg">
-                <div class="row">
-                  <div class="column1" *ngFor="let i of Arr(num4)">
-                    <img
-                      class="man"
-                      style="margin-right: 4%;"
-                      src="../../assets/images/ico-ppl.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-          <br />
-          <div class="head">
-            <img class="pull-left" src="../../assets/images/airplane.svg" alt="" />
-            <span class="pass-icon">Airplane</span>
-            <div class="row">
-              <span class="col-md-1"> </span>
-              <span class="col-md-2" class="hyperrounded">
-                <span>
-                  <img
-                    style="margin-top:-3%;margin-left: 5%;"
-                    src="../../assets/images/ico-passenger.svg"
-                    alt=""
-                  />
-                </span>
-                <span style="float:right"> 500</span>
-              </span>
-              <span class="manimg">
-                <div class="row">
-                  <div class="column1" *ngFor="let i of Arr(num5)">
-                    <img
-                      class="man"
-                      src="../../assets/images/ico-ppl.svg"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-          <br />
-          <div class="head">
-            <img class="pull-left" src="../../assets/images/train.svg" alt="" />
-            <span class="pass-icon">train</span>
-            <div class="row">
-              <span class="col-md-1"> </span>
-              <span class="col-md-2" class="hyperrounded">
-                <span>
-                  <img
-                    style="margin-top:-3%;margin-left: 3%;"
-                    src="../../assets/images/ico-passenger.svg"
-                    alt=""
-                  />
-                </span>
-                <span style="float:right">672</span>
-              </span>
-              <span class="manimg">
-                <div class="row">
-                  <div class="column1" *ngFor="let i of Arr(num3)">
-                    <img
-                      class="man"
-                      src="../../assets/images/ico-ppl.svg"
-                      alt=""
-                    />
-                  </div>
-                  <div class="column1">
-                    <img
-                      style="width:1.5vw;"
-                      src="../../assets/images/halfman.gif"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-          <br />
-
-          <div class="head">
-            <img class="pull-left" src="../../assets/images/car.svg" alt="" />
-            <span class="pass-icon">Car</span>
-            <div class="row">
-              <span class="col-md-1"> </span>
-              <span class="col-md-2" class="hyperrounded">
-                <span>
-                  <img
-                    style="margin-top:-3%;margin-left: 3%;"
-                    src="../../assets/images/ico-passenger.svg"
-                    alt=""
-                  />
-                </span>
-                <span style="float:right">4</span>
-              </span>
-              <span class="manimg">
-                <div class="row">
-                  <div class="column1">
-                    <img
-                      style="width:1.5vw;"
-                      src="../../assets/images/man1.gif"
-                      alt=""
-                    />
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-          <br />
-        </div>
-
-        <div class="timesTab2" *ngIf="coEmissionTabClicked">
-          <div class="row">
-            <div class="col-md-8">
-              <h4 id="speed1">Carbon Emissions</h4>
-              <!-- <h6 id="Passenger">Total Passengers</h6> -->
-            </div>
-            <div class="co2rect">
-              <span style="color:black;">
-                <div class="co2triangle-up"></div>
-                co <sub>2</sub> emission refers to the amount of co <sub>2</sub> emitted over the
-                duration of the trip by transportation type. Numbers are
-                approximate.
-              </span>
-              <div class="col-md-4" style="position: absolute;min-width: 30%;">
-                <img
-                  alt=""
-                  style="margin-top: 0.8vw;width:1vw;margin-left: 0.5vw;"
-                  src="../../assets/images/ico-tooltip.svg"
-                />
-              </div>
-            </div>
-          </div>
-
-          <h6>Grams of CO<sub>2</sub> per kilometer</h6>
-          <br />
-
-          <div class="head">
-            <img
-              class="pull-left"
-              src="../../assets/images/capsule-compressed-02-copy-2.svg"
-              alt=""
-            />
-            <span class="pass-icon">HyperloopTT</span> <br />
-            <div class="row">
-              <span class="col-md-1"> </span>
-              <span
-                class="col-md-2"
-                class="carbonhyperrounded"
-                style="text-align:center;font-size: 1vw;"
-              >
-              &nbsp; &nbsp; <10 g </span>
-              <span class="col-md-8 co2text">
-                The HyperloopTT system is powered by a combination of
-                alternative energy sources
-              </span>
-            </div>
-          </div>
-          <br />
-          <div class="head">
-            <img
-              class="pull-left"
-              src="../../assets/images/airplane.svg"
-              alt=""
-            />
-            <span class="pass-icon">Airplane</span> <br />
-            <div class="co2Rounded">45-60 g</div>
-            <span
-              class="progress-bar primary-button"
-              style="transition: width 2s;width:20%;margin-top:-5%;margin-left:32%;"
-            ></span>
-          </div>
-          <div class="head">
-            <img class="pull-left" src="../../assets/images/train.svg" alt="" />
-            <span class="pass-icon">Train</span> <br />
-            <div class="co2Rounded">15-30 g</div>
-            <span
-              class="progress-bar primary-button"
-              style="transition: width 2s;width:8%;margin-top:-5%;margin-left:32%;"
-            ></span>
-          </div>
-          <div class="head">
-            <img class="pull-left" src="../../assets/images/car.svg" alt="" />
-            <span class="pass-icon">Car</span> <br />
-            <div class="co2Rounded">10-150 g</div>
-            <span
-              class="progress-bar primary-button"
-              style="transition: width 2s;width:4%;margin-top:-5%;margin-left:32%;"
-            ></span>
-          </div>
-        </div>
-        <span class="hyperloopimg">
-          <span class="title"><a href="http://www.hyperloop.global">Related Stories</a> </span>
-          <img src="../../assets/images/HyperloopTT Tube 1.jpg" alt="" />
-        </span>
-      </div>
-    </div>
-
-    <div class="social">
-      <app-social
-        [source]="sourceLocation"
-        [destination]="destinationLocation"
-      ></app-social>
-    </div>
-  </div>
-
-  <!--
-    <div class="bar" (click)="sidenav(); converter=false" *ngIf="sidenavval1">
-      <a href="javascript:void(0)" style="right: 5px">
-        <img *ngIf="sidenavval" src="../../assets/images/arrow.svg" alt="" />
-        <img *ngIf="!sidenavval" src="../../assets/images/rightarrow.svg" alt="" />
-      </a>
-    </div>
-  -->
-  <div
-    id="googleMap"
-    style="width:100%;height:100%;position:absolute; z-index: 0;"
-  ></div>
-  <div id="infowindow-content">
-    <span id="place-name" class="title"></span> <span id="place-id"></span>
-    <br />
-    <span id="place-address"></span>
-  </div>
-</div>
-
-<div *ngIf="mobilestate">
-  <div class="landing" *ngIf="playroute">
-    <p class="httjourney">Enjoy your journey with HyperloopTT</p>
-  </div>
-  <div class="bottomwindow" [@slideUpDown]="visible">
-    <div (click)="setVisible()">
-      <img
-        style="margin-left: 43vw; width:10vw"
-        src="../../assets/images/horizontal_bar.svg"
-      />
-    </div>
-    <div class="preexisting" *ngIf="exampleTabClicked">
-      <h5>Or Select Predefined Routes</h5>
-
-      <button class="p-button" type="submit" (click)="drawRouteLinkOne()">
-        Los Angeles
-        <img src="../../assets/images/ico-destination.svg" alt="" /> San
-        Francisco
-      </button>
-      <br />
-      <br />
-
-      <button type="submit" class="p-button" (click)="drawRouteLinkTwo()">
-        New York
-        <img src="../../assets/images/ico-destination.svg" alt="" /> Chicago
-      </button>
-      <br />
-      <br />
-      <button type="submit" class="p-button" (click)="drawRouteLinkThree()">
-        Sao Paulo <img src="../../assets/images/ico-destination.svg" alt="" />Rio
-        de Janeiro
-      </button>
-      <br />
-      <br />
-      <button type="submit" class="p-button" (click)="drawRouteLinkFour()">
-        London
-        <img src="../../assets/images/ico-destination.svg" alt="" /> Amsterdam
-      </button>
-      <br />
-      <br />
-      <br />
-    </div>
-  </div>
-
-  <div
-    class="bottomslider"
-    *ngIf="!playroute && !exampleTabClicked"
-    [@UpDown]="toggle"
-  >
-    <div (click)="slidertoggle()">
-      <img
-        style="margin-left: 43vw; width:10vw"
-        src="../../assets/images/horizontal_bar.svg"
-      />
-    </div>
-    <div class="timesTab" *ngIf="timesTabclicked">
-      <div class="row"><span class="travel"> Travel Time Comparison</span></div>
-      <div class="barsvalue">
-        <div class="bartime"><span class="vl"> </span> &nbsp;= 10 min</div>
-        <div class="bartransittime">
-          <span class="vl"> </span> &nbsp; = Transit Time
-          <img
-            (click)="travelInfo()"
-            src="../../assets/images/ico-tooltip.svg"
-            alt=""
-          />
-        </div>
-      </div>
-      <div class="capsule">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">HyperloopTT</div>
-        <div>
-          <div class="htttime">{{ hyperloopTime }}</div>
-          <div class="httvl">
-            <span class="vl" *ngFor="let i of Arr(num)"></span>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="capsule">
-        <div class="htt">
-          <img src="../../assets/images/airplane.svg" alt="" />
-        </div>
-        <div class="httimage">Airplane</div>
-        <div>
-          <div class="htttime">{{ airplanTime }} m</div>
-          <div class="httvl">
-            <span class="vl" *ngFor="let i of Arr(num1)"></span>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="capsule">
-        <div class="htt">
-          <img src="../../assets/images/train.svg" alt="" />
-        </div>
-        <div class="httimage">Train</div>
-        <div>
-          <div class="htttime">
-            <span *ngIf="!PTTime">0 m</span>
-            <span *ngIf="PTTime">
-              <span
-                *ngFor="let pt of PTTime; let i = index"
-                [class.helptxt]="i % 2 !== 0"
-              >
-                {{
-                  pt === "hours"
-                    ? "h"
-                    : pt === "hour"
-                    ? "h"
-                    : pt == "mins"
-                    ? "m"
-                    : pt
-                }}
-              </span></span
-            >
-          </div>
-          <div class="httvl">
-            <span class="vl" *ngFor="let i of Arr(num)"></span>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div class="capsule">
-        <div class="htt"><img src="../../assets/images/car.svg" alt="" /></div>
-        <div class="httimage">Car</div>
-        <div>
-          <div class="htttime">
-            <span *ngIf="!drivingTime">0 m</span>
-            <span *ngIf="drivingTime">
-              <span
-                *ngFor="let dt of drivingTime; let i = index"
-                [class.helptxt]="i % 2 !== 0"
-              >
-                {{ dt === "hours" ? "h" : dt === "hour" ? "h" : dt }}</span
-              >
-            </span>
-          </div>
-          <div class="httvl">
-            <span class="vl" *ngFor="let i of Arr(num3)"></span>
-          </div>
-        </div>
-      </div>
-      <div class="sharenavbar socialshare" *ngIf="shareflag">
-        <app-social
-          [source]="sourceLocation"
-          [destination]="destinationLocation"
-        ></app-social>
-      </div>
-    </div>
-
-        <!-- //passenger tab -->
-
-    <div class="passengerTab" *ngIf="passengerTabClicked">
-      <div class="row">
-        <span class="travel"> Total Passengers</span> &nbsp;&nbsp;
-        <img
-          (click)="travelInfo()"
-          src="../../assets/images/ico-tooltip.svg"
-          alt=""
-        />
-      </div>
-      <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
-      <span style="color:#d8d8d8;font-size: 4vw;margin-left:2%;"
-        >= 25 Passengers </span
-      ><br />
-      <div class="row">
-        <div class="col-md-6"><h5 class="driving">Driving Time</h5></div>
-
-        <div class="col-md-6" style="margin-left: 31vw;margin-top: -7vw;">
-          <span class="vertical"></span>&nbsp;
-          <button><a class="daily" href="#">Daily </a>&nbsp;</button>
-          
-          <span class="vertical"></span>&nbsp;
-          <a class="daily" href="#">Hourly</a>
-        </div>
-      </div>
-      <div class="passenger">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">HyperloopTT</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect">
-              <img src="../../assets/images/ico-passenger.svg" alt="" />
-              <span> 2,500</span>
-            </div>
-          </div>
-          <div class="httvl">
-            <span *ngFor="let i of Arr(num)">
-              <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="passenger">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">Airplane</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect">
-              <img src="../../assets/images/ico-passenger.svg" alt="" />
-              <span> 500</span>
-            </div>
-          </div>
-          <div class="httvl">
-            <span *ngFor="let i of Arr(num3)">
-              <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="passenger">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">Train</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect">
-              <img src="../../assets/images/ico-passenger.svg" alt="" />
-              <span> 672</span>
-            </div>
-          </div>
-          <div class="httvl">
-            <span *ngFor="let i of Arr(num3)">
-              <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="passenger">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">Car</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect">
-              <img src="../../assets/images/ico-passenger.svg" alt="" />
-              <span> 4</span>
-            </div>
-          </div>
-          <div class="httvl">
-            <span>
-              <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="sharenavbar socialshare" *ngIf="shareflag">
-        <app-social
-          [source]="sourceLocation"
-          [destination]="destinationLocation"
-        ></app-social>
-      </div>
-    </div>
-
-    <!-- //passenger tab end -->
-
-    <!-- co2 tab start -->
-
-    <div class="co2tab" *ngIf="coEmissionTabClicked">
-      <div class="row">
-        <span class="travel"> Carbon Emissions</span> &nbsp;&nbsp;
-        <img
-          (click)="travelInfo()"
-          src="../../assets/images/ico-tooltip.svg"
-          alt=""
-        />
-      </div>
-      <div class="co2txt">grams of CO<sub>2</sub> per kilometer</div>
-      <!-- <div class="co2_values"> -->
-      <div class="co2">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">HyperloopTT</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect"><span> < 10 g </span></div>
-          </div>
-          <div class="httvl">
-            <!--
-              <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
-            -->
-            The HyperloopTT system is powered by a combination of alternative
-            energy sources
-          </div>
-        </div>
-      </div>
-
-      <div class="co2">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">Airplane</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect"><span> 45-60 g</span></div>
-          </div>
-          <div class="httvl">
-            <span
-              style="width: 50%;"
-              class="progress-bar primary-button"
-            ></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="co2">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">Train</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect"><span> 15-30 g</span></div>
-          </div>
-          <div class="httvl">
-            <span
-              style="width: 30%;"
-              class="progress-bar primary-button"
-            ></span>
-          </div>
-        </div>
-      </div>
-      <div class="co2">
-        <div class="htt">
-          <img
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-          />
-        </div>
-        <div class="httimage">Car</div>
-        <div>
-          <div class="htttime">
-            <div class="blackrect"><span> 10-150 g</span></div>
-          </div>
-          <div class="httvl">
-            <span
-              style="width: 66%;"
-              class="progress-bar primary-button"
-            ></span>
-          </div>
-        </div>
-      </div>
-      <!-- </div> -->
-      <div class="sharenavbar socialshare" *ngIf="shareflag">
-        <app-social
-          [source]="sourceLocation"
-          [destination]="destinationLocation"
-        ></app-social>
-      </div>
-
-      <!-- co2 tab end -->
-    </div>
-
-    <div class="speedtab" *ngIf="speedTabClicked" (click)="startSpeedometer()">
-      <div class="row"><span class="travel"> Top Speed</span> &nbsp;&nbsp;</div>
-      <div class="barsvalue">
-        <div class="bartime">
-          <img id="maxspeed" src="../../assets/images/maxspeed.svg" /> &nbsp;=
-          Max Speed
-        </div>
-        <div class="bartransittime">
-          <img id="actual" src="../../assets/images/actualspeed.svg" /> &nbsp; =
-          Average Speed
-        </div>
-      </div>
-       <div id="speedometer1">
-        <div class="row">
-          <img
-            class="speedimg"
-            src="../../assets/images/capsule-compressed-02-copy-2.svg"
-            alt=""
-            height="15"
-            width="40"
-          />&nbsp;&nbsp;
-
-          <canvas
-            *ngIf="!playroute"
-            id="bar1"
-            width="350"
-            height="350"
-          ></canvas>
-        </div>
-        <div class="row">
-          <img
-            class="speedimg"
-            src="../../assets/images/airplane.svg"
-            alt=""
-            height="15"
-            width="40"
-          />&nbsp;&nbsp;
-          <canvas
-            *ngIf="!playroute"
-            id="bar2"
-            width="350"
-            height="350"
-          ></canvas>
-        </div>
-        <div class="row">
-          <img
-            class="speedimg"
-            src="../../assets/images/train.svg"
-            alt=""
-            height="15"
-            width="40"
-          />&nbsp;&nbsp;
-          <canvas
-            *ngIf="!playroute"
-            id="bar3"
-            width="350"
-            height="350"
-          ></canvas>
-        </div>
-        <div class="row">
-          <img
-            class="speedimg"
-            src="../../assets/images/car.svg"
-            alt=""
-            height="15"
-            width="40"
-          />&nbsp;&nbsp;
-          <canvas
-            *ngIf="!playroute"
-            id="bar4"
-            width="350"
-            height="350"
-          ></canvas>
-        </div>
-      </div>
-     
-      <div class="sharenavbar socialshare" *ngIf="shareflag">
-        <app-social
-          [source]="sourceLocation"
-          [destination]="destinationLocation"
-        ></app-social>
-      </div>
-    </div>
-    
-  </div>
-
-</div>
+                                                                          @if (mobilestate) {
+                                                                            <div>
+                                                                              @if (playroute) {
+                                                                                <div class="landing">
+                                                                                  <p class="httjourney">Enjoy your journey with HyperloopTT</p>
+                                                                                </div>
+                                                                              }
+                                                                              <div class="bottomwindow" [@slideUpDown]="visible">
+                                                                                <div (click)="setVisible()">
+                                                                                  <img
+                                                                                    style="margin-left: 43vw; width:10vw"
+                                                                                    src="../../assets/images/horizontal_bar.svg"
+                                                                                    />
+                                                                                  </div>
+                                                                                  @if (exampleTabClicked) {
+                                                                                    <div class="preexisting">
+                                                                                      <h5>Or Select Predefined Routes</h5>
+                                                                                      <button class="p-button" type="submit" (click)="drawRouteLinkOne()">
+                                                                                        Los Angeles
+                                                                                        <img src="../../assets/images/ico-destination.svg" alt="" /> San
+                                                                                        Francisco
+                                                                                      </button>
+                                                                                      <br />
+                                                                                      <br />
+                                                                                      <button type="submit" class="p-button" (click)="drawRouteLinkTwo()">
+                                                                                        New York
+                                                                                        <img src="../../assets/images/ico-destination.svg" alt="" /> Chicago
+                                                                                      </button>
+                                                                                      <br />
+                                                                                      <br />
+                                                                                      <button type="submit" class="p-button" (click)="drawRouteLinkThree()">
+                                                                                        Sao Paulo <img src="../../assets/images/ico-destination.svg" alt="" />Rio
+                                                                                        de Janeiro
+                                                                                      </button>
+                                                                                      <br />
+                                                                                      <br />
+                                                                                      <button type="submit" class="p-button" (click)="drawRouteLinkFour()">
+                                                                                        London
+                                                                                        <img src="../../assets/images/ico-destination.svg" alt="" /> Amsterdam
+                                                                                      </button>
+                                                                                      <br />
+                                                                                      <br />
+                                                                                      <br />
+                                                                                    </div>
+                                                                                  }
+                                                                                </div>
+                                                                                @if (!playroute && !exampleTabClicked) {
+                                                                                  <div
+                                                                                    class="bottomslider"
+                                                                                    [@UpDown]="toggle"
+                                                                                    >
+                                                                                    <div (click)="slidertoggle()">
+                                                                                      <img
+                                                                                        style="margin-left: 43vw; width:10vw"
+                                                                                        src="../../assets/images/horizontal_bar.svg"
+                                                                                        />
+                                                                                      </div>
+                                                                                      @if (timesTabclicked) {
+                                                                                        <div class="timesTab">
+                                                                                          <div class="row"><span class="travel"> Travel Time Comparison</span></div>
+                                                                                          <div class="barsvalue">
+                                                                                            <div class="bartime"><span class="vl"> </span> &nbsp;= 10 min</div>
+                                                                                            <div class="bartransittime">
+                                                                                              <span class="vl"> </span> &nbsp; = Transit Time
+                                                                                              <img
+                                                                                                (click)="travelInfo()"
+                                                                                                src="../../assets/images/ico-tooltip.svg"
+                                                                                                alt=""
+                                                                                                />
+                                                                                              </div>
+                                                                                            </div>
+                                                                                            <div class="capsule">
+                                                                                              <div class="htt">
+                                                                                                <img
+                                                                                                  src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                  alt=""
+                                                                                                  />
+                                                                                                </div>
+                                                                                                <div class="httimage">HyperloopTT</div>
+                                                                                                <div>
+                                                                                                  <div class="htttime">{{ hyperloopTime }}</div>
+                                                                                                  <div class="httvl">
+                                                                                                    @for (i of Arr(num); track i) {
+                                                                                                      <span class="vl"></span>
+                                                                                                    }
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                              <br />
+                                                                                              <div class="capsule">
+                                                                                                <div class="htt">
+                                                                                                  <img src="../../assets/images/airplane.svg" alt="" />
+                                                                                                </div>
+                                                                                                <div class="httimage">Airplane</div>
+                                                                                                <div>
+                                                                                                  <div class="htttime">{{ airplanTime }} m</div>
+                                                                                                  <div class="httvl">
+                                                                                                    @for (i of Arr(num1); track i) {
+                                                                                                      <span class="vl"></span>
+                                                                                                    }
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                              </div>
+                                                                                              <br />
+                                                                                              <div class="capsule">
+                                                                                                <div class="htt">
+                                                                                                  <img src="../../assets/images/train.svg" alt="" />
+                                                                                                </div>
+                                                                                                <div class="httimage">Train</div>
+                                                                                                <div>
+                                                                                                  <div class="htttime">
+                                                                                                    @if (!PTTime) {
+                                                                                                      <span>0 m</span>
+                                                                                                    }
+                                                                                                    @if (PTTime) {
+                                                                                                      <span>
+                                                                                                        @for (pt of PTTime; track pt; let i = $index) {
+                                                                                                          <span
+                                                                                                            [class.helptxt]="i % 2 !== 0"
+                                                                                                            >
+                                                                                                            {{
+                                                                                                            pt === "hours"
+                                                                                                            ? "h"
+                                                                                                            : pt === "hour"
+                                                                                                            ? "h"
+                                                                                                            : pt == "mins"
+                                                                                                            ? "m"
+                                                                                                            : pt
+                                                                                                            }}
+                                                                                                          </span>
+                                                                                                          }</span
+                                                                                                          >
+                                                                                                      }
+                                                                                                    </div>
+                                                                                                    <div class="httvl">
+                                                                                                      @for (i of Arr(num); track i) {
+                                                                                                        <span class="vl"></span>
+                                                                                                      }
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                </div>
+                                                                                                <br />
+                                                                                                <div class="capsule">
+                                                                                                  <div class="htt"><img src="../../assets/images/car.svg" alt="" /></div>
+                                                                                                  <div class="httimage">Car</div>
+                                                                                                  <div>
+                                                                                                    <div class="htttime">
+                                                                                                      @if (!drivingTime) {
+                                                                                                        <span>0 m</span>
+                                                                                                      }
+                                                                                                      @if (drivingTime) {
+                                                                                                        <span>
+                                                                                                          @for (dt of drivingTime; track dt; let i = $index) {
+                                                                                                            <span
+                                                                                                              [class.helptxt]="i % 2 !== 0"
+                                                                                                              >
+                                                                                                              {{ dt === "hours" ? "h" : dt === "hour" ? "h" : dt }}</span
+                                                                                                              >
+                                                                                                            }
+                                                                                                          </span>
+                                                                                                        }
+                                                                                                      </div>
+                                                                                                      <div class="httvl">
+                                                                                                        @for (i of Arr(num3); track i) {
+                                                                                                          <span class="vl"></span>
+                                                                                                        }
+                                                                                                      </div>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                                  @if (shareflag) {
+                                                                                                    <div class="sharenavbar socialshare">
+                                                                                                      <app-social
+                                                                                                        [source]="sourceLocation"
+                                                                                                        [destination]="destinationLocation"
+                                                                                                      ></app-social>
+                                                                                                    </div>
+                                                                                                  }
+                                                                                                </div>
+                                                                                              }
+                                                                                              <!-- //passenger tab -->
+                                                                                              @if (passengerTabClicked) {
+                                                                                                <div class="passengerTab">
+                                                                                                  <div class="row">
+                                                                                                    <span class="travel"> Total Passengers</span> &nbsp;&nbsp;
+                                                                                                    <img
+                                                                                                      (click)="travelInfo()"
+                                                                                                      src="../../assets/images/ico-tooltip.svg"
+                                                                                                      alt=""
+                                                                                                      />
+                                                                                                    </div>
+                                                                                                    <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
+                                                                                                    <span style="color:#d8d8d8;font-size: 4vw;margin-left:2%;"
+                                                                                                      >= 25 Passengers </span
+                                                                                                      ><br />
+                                                                                                      <div class="row">
+                                                                                                        <div class="col-md-6"><h5 class="driving">Driving Time</h5></div>
+                                                                                                        <div class="col-md-6" style="margin-left: 31vw;margin-top: -7vw;">
+                                                                                                          <span class="vertical"></span>&nbsp;
+                                                                                                          <button><a class="daily" href="#">Daily </a>&nbsp;</button>
+                                                                                                          <span class="vertical"></span>&nbsp;
+                                                                                                          <a class="daily" href="#">Hourly</a>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                      <div class="passenger">
+                                                                                                        <div class="htt">
+                                                                                                          <img
+                                                                                                            src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                            alt=""
+                                                                                                            />
+                                                                                                          </div>
+                                                                                                          <div class="httimage">HyperloopTT</div>
+                                                                                                          <div>
+                                                                                                            <div class="htttime">
+                                                                                                              <div class="blackrect">
+                                                                                                                <img src="../../assets/images/ico-passenger.svg" alt="" />
+                                                                                                                <span> 2,500</span>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                            <div class="httvl">
+                                                                                                              @for (i of Arr(num); track i) {
+                                                                                                                <span>
+                                                                                                                  <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
+                                                                                                                </span>
+                                                                                                              }
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                        </div>
+                                                                                                        <div class="passenger">
+                                                                                                          <div class="htt">
+                                                                                                            <img
+                                                                                                              src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                              alt=""
+                                                                                                              />
+                                                                                                            </div>
+                                                                                                            <div class="httimage">Airplane</div>
+                                                                                                            <div>
+                                                                                                              <div class="htttime">
+                                                                                                                <div class="blackrect">
+                                                                                                                  <img src="../../assets/images/ico-passenger.svg" alt="" />
+                                                                                                                  <span> 500</span>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                              <div class="httvl">
+                                                                                                                @for (i of Arr(num3); track i) {
+                                                                                                                  <span>
+                                                                                                                    <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
+                                                                                                                  </span>
+                                                                                                                }
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                          </div>
+                                                                                                          <div class="passenger">
+                                                                                                            <div class="htt">
+                                                                                                              <img
+                                                                                                                src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                                alt=""
+                                                                                                                />
+                                                                                                              </div>
+                                                                                                              <div class="httimage">Train</div>
+                                                                                                              <div>
+                                                                                                                <div class="htttime">
+                                                                                                                  <div class="blackrect">
+                                                                                                                    <img src="../../assets/images/ico-passenger.svg" alt="" />
+                                                                                                                    <span> 672</span>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                                <div class="httvl">
+                                                                                                                  @for (i of Arr(num3); track i) {
+                                                                                                                    <span>
+                                                                                                                      <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
+                                                                                                                    </span>
+                                                                                                                  }
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                            </div>
+                                                                                                            <div class="passenger">
+                                                                                                              <div class="htt">
+                                                                                                                <img
+                                                                                                                  src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                                  alt=""
+                                                                                                                  />
+                                                                                                                </div>
+                                                                                                                <div class="httimage">Car</div>
+                                                                                                                <div>
+                                                                                                                  <div class="htttime">
+                                                                                                                    <div class="blackrect">
+                                                                                                                      <img src="../../assets/images/ico-passenger.svg" alt="" />
+                                                                                                                      <span> 4</span>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                  <div class="httvl">
+                                                                                                                    <span>
+                                                                                                                      <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
+                                                                                                                    </span>
+                                                                                                                  </div>
+                                                                                                                </div>
+                                                                                                              </div>
+                                                                                                              @if (shareflag) {
+                                                                                                                <div class="sharenavbar socialshare">
+                                                                                                                  <app-social
+                                                                                                                    [source]="sourceLocation"
+                                                                                                                    [destination]="destinationLocation"
+                                                                                                                  ></app-social>
+                                                                                                                </div>
+                                                                                                              }
+                                                                                                            </div>
+                                                                                                          }
+                                                                                                          <!-- //passenger tab end -->
+                                                                                                          <!-- co2 tab start -->
+                                                                                                          @if (coEmissionTabClicked) {
+                                                                                                            <div class="co2tab">
+                                                                                                              <div class="row">
+                                                                                                                <span class="travel"> Carbon Emissions</span> &nbsp;&nbsp;
+                                                                                                                <img
+                                                                                                                  (click)="travelInfo()"
+                                                                                                                  src="../../assets/images/ico-tooltip.svg"
+                                                                                                                  alt=""
+                                                                                                                  />
+                                                                                                                </div>
+                                                                                                                <div class="co2txt">grams of CO<sub>2</sub> per kilometer</div>
+                                                                                                                <!-- <div class="co2_values"> -->
+                                                                                                                <div class="co2">
+                                                                                                                  <div class="htt">
+                                                                                                                    <img
+                                                                                                                      src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                                      alt=""
+                                                                                                                      />
+                                                                                                                    </div>
+                                                                                                                    <div class="httimage">HyperloopTT</div>
+                                                                                                                    <div>
+                                                                                                                      <div class="htttime">
+                                                                                                                        <div class="blackrect"><span> < 10 g </span></div>
+                                                                                                                      </div>
+                                                                                                                      <div class="httvl">
+                                                                                                                        <!--
+                                                                                                                        <img class="man" src="../../assets/images/ico-ppl.svg" alt="" />
+                                                                                                                        -->
+                                                                                                                        The HyperloopTT system is powered by a combination of alternative
+                                                                                                                        energy sources
+                                                                                                                      </div>
+                                                                                                                    </div>
+                                                                                                                  </div>
+                                                                                                                  <div class="co2">
+                                                                                                                    <div class="htt">
+                                                                                                                      <img
+                                                                                                                        src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                                        alt=""
+                                                                                                                        />
+                                                                                                                      </div>
+                                                                                                                      <div class="httimage">Airplane</div>
+                                                                                                                      <div>
+                                                                                                                        <div class="htttime">
+                                                                                                                          <div class="blackrect"><span> 45-60 g</span></div>
+                                                                                                                        </div>
+                                                                                                                        <div class="httvl">
+                                                                                                                          <span
+                                                                                                                            style="width: 50%;"
+                                                                                                                            class="progress-bar primary-button"
+                                                                                                                          ></span>
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                    </div>
+                                                                                                                    <div class="co2">
+                                                                                                                      <div class="htt">
+                                                                                                                        <img
+                                                                                                                          src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                                          alt=""
+                                                                                                                          />
+                                                                                                                        </div>
+                                                                                                                        <div class="httimage">Train</div>
+                                                                                                                        <div>
+                                                                                                                          <div class="htttime">
+                                                                                                                            <div class="blackrect"><span> 15-30 g</span></div>
+                                                                                                                          </div>
+                                                                                                                          <div class="httvl">
+                                                                                                                            <span
+                                                                                                                              style="width: 30%;"
+                                                                                                                              class="progress-bar primary-button"
+                                                                                                                            ></span>
+                                                                                                                          </div>
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                      <div class="co2">
+                                                                                                                        <div class="htt">
+                                                                                                                          <img
+                                                                                                                            src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                                            alt=""
+                                                                                                                            />
+                                                                                                                          </div>
+                                                                                                                          <div class="httimage">Car</div>
+                                                                                                                          <div>
+                                                                                                                            <div class="htttime">
+                                                                                                                              <div class="blackrect"><span> 10-150 g</span></div>
+                                                                                                                            </div>
+                                                                                                                            <div class="httvl">
+                                                                                                                              <span
+                                                                                                                                style="width: 66%;"
+                                                                                                                                class="progress-bar primary-button"
+                                                                                                                              ></span>
+                                                                                                                            </div>
+                                                                                                                          </div>
+                                                                                                                        </div>
+                                                                                                                      <!-- </div> -->
+                                                                                                                      @if (shareflag) {
+                                                                                                                        <div class="sharenavbar socialshare">
+                                                                                                                          <app-social
+                                                                                                                            [source]="sourceLocation"
+                                                                                                                            [destination]="destinationLocation"
+                                                                                                                          ></app-social>
+                                                                                                                        </div>
+                                                                                                                      }
+                                                                                                                      <!-- co2 tab end -->
+                                                                                                                    </div>
+                                                                                                                  }
+                                                                                                                  @if (speedTabClicked) {
+                                                                                                                    <div class="speedtab" (click)="startSpeedometer()">
+                                                                                                                      <div class="row"><span class="travel"> Top Speed</span> &nbsp;&nbsp;</div>
+                                                                                                                      <div class="barsvalue">
+                                                                                                                        <div class="bartime">
+                                                                                                                          <img id="maxspeed" src="../../assets/images/maxspeed.svg" /> &nbsp;=
+                                                                                                                          Max Speed
+                                                                                                                        </div>
+                                                                                                                        <div class="bartransittime">
+                                                                                                                          <img id="actual" src="../../assets/images/actualspeed.svg" /> &nbsp; =
+                                                                                                                          Average Speed
+                                                                                                                        </div>
+                                                                                                                      </div>
+                                                                                                                      <div id="speedometer1">
+                                                                                                                        <div class="row">
+                                                                                                                          <img
+                                                                                                                            class="speedimg"
+                                                                                                                            src="../../assets/images/capsule-compressed-02-copy-2.svg"
+                                                                                                                            alt=""
+                                                                                                                            height="15"
+                                                                                                                            width="40"
+                                                                                                                            />&nbsp;&nbsp;
+                                                                                                                            @if (!playroute) {
+                                                                                                                              <canvas
+                                                                                                                                id="bar1"
+                                                                                                                                width="350"
+                                                                                                                                height="350"
+                                                                                                                              ></canvas>
+                                                                                                                            }
+                                                                                                                          </div>
+                                                                                                                          <div class="row">
+                                                                                                                            <img
+                                                                                                                              class="speedimg"
+                                                                                                                              src="../../assets/images/airplane.svg"
+                                                                                                                              alt=""
+                                                                                                                              height="15"
+                                                                                                                              width="40"
+                                                                                                                              />&nbsp;&nbsp;
+                                                                                                                              @if (!playroute) {
+                                                                                                                                <canvas
+                                                                                                                                  id="bar2"
+                                                                                                                                  width="350"
+                                                                                                                                  height="350"
+                                                                                                                                ></canvas>
+                                                                                                                              }
+                                                                                                                            </div>
+                                                                                                                            <div class="row">
+                                                                                                                              <img
+                                                                                                                                class="speedimg"
+                                                                                                                                src="../../assets/images/train.svg"
+                                                                                                                                alt=""
+                                                                                                                                height="15"
+                                                                                                                                width="40"
+                                                                                                                                />&nbsp;&nbsp;
+                                                                                                                                @if (!playroute) {
+                                                                                                                                  <canvas
+                                                                                                                                    id="bar3"
+                                                                                                                                    width="350"
+                                                                                                                                    height="350"
+                                                                                                                                  ></canvas>
+                                                                                                                                }
+                                                                                                                              </div>
+                                                                                                                              <div class="row">
+                                                                                                                                <img
+                                                                                                                                  class="speedimg"
+                                                                                                                                  src="../../assets/images/car.svg"
+                                                                                                                                  alt=""
+                                                                                                                                  height="15"
+                                                                                                                                  width="40"
+                                                                                                                                  />&nbsp;&nbsp;
+                                                                                                                                  @if (!playroute) {
+                                                                                                                                    <canvas
+                                                                                                                                      id="bar4"
+                                                                                                                                      width="350"
+                                                                                                                                      height="350"
+                                                                                                                                    ></canvas>
+                                                                                                                                  }
+                                                                                                                                </div>
+                                                                                                                              </div>
+                                                                                                                              @if (shareflag) {
+                                                                                                                                <div class="sharenavbar socialshare">
+                                                                                                                                  <app-social
+                                                                                                                                    [source]="sourceLocation"
+                                                                                                                                    [destination]="destinationLocation"
+                                                                                                                                  ></app-social>
+                                                                                                                                </div>
+                                                                                                                              }
+                                                                                                                            </div>
+                                                                                                                          }
+                                                                                                                        </div>
+                                                                                                                      }
+                                                                                                                    </div>
+                                                                                                                  }

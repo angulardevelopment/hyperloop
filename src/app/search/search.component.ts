@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, AfterViewInit, NgZone, HostListener } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { HttService } from '../htt.service'
-import * as $ from 'jquery';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import $ from 'jquery';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 declare var  google;
 
 @Component({
   selector: 'app-search',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })

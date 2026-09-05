@@ -4,28 +4,29 @@
 
   <!-- <div class="mobiletriangle"></div> -->
 
-  <div class="show" *ngIf="show">
-    
-    <div class="smallrectangle">
+  @if (show) {
+    <div class="show">
+      <div class="smallrectangle">
         <div class="smalltriangle"></div>
-      <div class="shareitems">
-        <!-- <label class="sharelable">Share</label>&nbsp;&nbsp;&nbsp; -->
-        <a href="javascript:void(0)" (click)="twittershare()">
+        <div class="shareitems">
+          <!-- <label class="sharelable">Share</label>&nbsp;&nbsp;&nbsp; -->
+          <a href="javascript:void(0)" (click)="twittershare()">
           <img class="shareitemimg" src="../../assets/images/twitter.svg" /></a>
-        <a href="javascript:void(0)" (click)="facebookshare()">
+          <a href="javascript:void(0)" (click)="facebookshare()">
           <img class="shareitemimg" src="../../assets/images/facebook.svg" /></a>
-        <a href="javascript:void(0)" (click)="linkedInshare()">
+          <a href="javascript:void(0)" (click)="linkedInshare()">
           <img class="shareitemimg" src="../../assets/images/linkedin.svg" /></a>
-        <a href="javascript:void(0)" (click)="copytxt()">
+          <a href="javascript:void(0)" (click)="copytxt()">
           <img class="shareitemimg" src="../../assets/images/share-icon.svg" /></a>
-        <a href="javascript:void(0)" (click)="emailshare()">
+          <a href="javascript:void(0)" (click)="emailshare()">
           <img class="shareitemimg" src="../../assets/images/email.svg" /></a>
           <a href="javascript:void(0)" (click)="Instashare()">
             <img class="shareitemimg" src="../../assets/images/instagram.svg" />
           </a>
+        </div>
       </div>
     </div>
-  </div>
+  }
   <li class="sharing">
     <img class="shareimage" (click)="show = !show" src="../../assets/images/share.svg" alt="" />
   </li>

@@ -1,14 +1,29 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-
 import 'hammerjs';
+import { AppRoutingModule } from './app/app_routing.module';
+import { AppComponent } from './app/app.component';
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAnimations(),
+    provideHttpClient(),
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    importProvidersFrom(
+      AppRoutingModule,
+      NgxSpinnerModule,
+      MatSnackBarModule
+    )
+  ]
+}).catch(err => console.log(err));

@@ -8,8 +8,8 @@ describe('HttmapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HttmapComponent ]
-    })
+    imports: [HttmapComponent]
+})
     .compileComponents();
   }));
 

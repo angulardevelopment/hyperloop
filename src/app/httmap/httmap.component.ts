@@ -18,7 +18,7 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 // import { Http, Response } from "@angular/http";
 import { NgxSpinnerService } from "ngx-spinner";
-import * as $ from "jquery";
+import $ from "jquery";
 import * as Clipboard from "clipboard";
 import { AppSettings } from "../const/app_config";
 import { ApplicationStateService } from "../application-state.service";
@@ -26,13 +26,25 @@ import { countryUnitSystem } from "../const/country_Array";
 // import { MatSnackBar } from "@angular/material";
 import { MapCss } from "../const/map_css";
 import { HttService } from "../htt.service";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { FormGroup, Validators, FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { HttpClient } from "@angular/common/http";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { SocialComponent } from "../social/social.component";
 //
 declare var  google;
 @Component({
   selector: "app-httmap",
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    NgxSpinnerModule,
+    SocialComponent
+  ],
   templateUrl: "./httmap.component.html",
   styleUrls: ["./httmap.component.css"],
   animations: [
@@ -158,10 +170,11 @@ export class HttmapComponent implements OnInit {
   public autocomplete: any;
   public autocompletedest: any;
   public animationMarker: any;
+  public infowindow: any;
   menuState: string = "in";
-  private visible: string = "leave";
-  private toggle: string = "down";
-  private shareflag: boolean = false;
+  public visible: string = "leave";
+  public toggle: string = "down";
+  public shareflag: boolean = false;
   timetoggle: string = "timedown";
   arrow: string = "in";
   public hidebar: boolean = false;
@@ -1221,11 +1234,13 @@ export class HttmapComponent implements OnInit {
               google.maps.event.addListener(
                 this.marker,
                 "click",
-                (function(marker, i) {
-                  return function() {
-                    this.infowindow.setContent(j.lat + " " + j.lng);
+                (() => {
+                  return () => {
+                    if (this.infowindow) {
+                      this.infowindow.setContent(j.lat + " " + j.lng);
+                    }
                   };
-                })(this.marker, j)
+                })()
               );
             });
           });
@@ -1505,8 +1520,8 @@ export class HttmapComponent implements OnInit {
   }
 
   autoDriveTimer: any;
-  startRouteAnimation = function(marker, autoDriveS) {
-    this.autoDriveTimer = setInterval(function() {
+  startRouteAnimation(marker, autoDriveS) {
+    this.autoDriveTimer = setInterval(() => {
       // stop the timer if the route is finished
       if (autoDriveS.length === 0) {
         clearInterval(this.autoDriveTimer);
@@ -1518,7 +1533,7 @@ export class HttmapComponent implements OnInit {
         autoDriveS.shift();
       }
     }, 40);
-  };
+  }
 
 
   getPrivousIndex() {

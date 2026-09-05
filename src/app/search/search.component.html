@@ -1,19 +1,19 @@
-<div class="landing" *ngIf="hidesearch">
-  <div class="leftcontent">
-    <div class="txtrectangle">
-      <span class="welcomeWherewould" aria-multiline='true'>Enjoy your journey with
+@if (hidesearch) {
+  <div class="landing">
+    <div class="leftcontent">
+      <div class="txtrectangle">
+        <span class="welcomeWherewould" aria-multiline='true'>Enjoy your journey with
         HyperloopTT </span>
-    </div>
-   
-    <div class="search">
+      </div>
+      <div class="search">
         <form [formGroup]="form">
-        <div class="row">
-          <div class="col-sm-3 col-md-4 col-xl-4">
-            <label for="from">From</label>
-            <input #source ngControl="from" type="text" name="from" autocomplete="off" formControlName="src" required>
-            <!-- <div class="alert  alert-danger" *ngIf="form.get('src').hasError('required')">
+          <div class="row">
+            <div class="col-sm-3 col-md-4 col-xl-4">
+              <label for="from">From</label>
+              <input #source ngControl="from" type="text" name="from" autocomplete="off" formControlName="src" required>
+              <!-- <div class="alert  alert-danger" *ngIf="form.get('src').hasError('required')">
               Email is required
-          </div> -->
+            </div> -->
           </div>
           <div class="col-sm-3 col-md-1 col-xl-1">
             <div class="inputspace"></div>
@@ -22,20 +22,26 @@
           <div class="col-sm-3 col-md-4 col-xl-4">
             <label for="to">To</label>
             <input #destination name="to" type="text" ngControl="to"  formControlName="des" required>
-            <span class="hyperloopdistance" *ngIf="distance">{{distance}} km </span>
-            <span class="hyperloopdistance" *ngIf="!distance">0 km </span>
-            <div *ngIf="distance >= 2500" class="errormsg">
-              <div class="triangle"></div><br>
-              <div class="rect">
-                The current route simulation platform supports distances within 2500 km (1,500 miles).
-                While we keep evolving and optimizing the tool, please enter a shorter route.
+            @if (distance) {
+              <span class="hyperloopdistance">{{distance}} km </span>
+            }
+            @if (!distance) {
+              <span class="hyperloopdistance">0 km </span>
+            }
+            @if (distance >= 2500) {
+              <div class="errormsg">
+                <div class="triangle"></div><br>
+                <div class="rect">
+                  The current route simulation platform supports distances within 2500 km (1,500 miles).
+                  While we keep evolving and optimizing the tool, please enter a shorter route.
+                </div>
               </div>
-            </div>
+            }
           </div>
           <div class="col-sm-3 col-md-3 col-xl-3">
             <div class="inputspace"></div>
             <button type="button" [ngClass]="form.invalid || !play ? 'play' : 'notplay'"
-              (click)="Routes()" [disabled]="form.invalid || !play">PlayRoute</button>
+            (click)="Routes()" [disabled]="form.invalid || !play">PlayRoute</button>
           </div>
         </div>
       </form>
@@ -49,30 +55,30 @@
     <p class="orSelectpre-existi"> or Select predefined routes</p>
     <div class="pre-existing">
       <!-- <div class="row"> -->
-        <table class="pre-existing-route">
-          <tr>
-            <td>
-              <button type="submit" class="primary-button" (click)="drawRouteLinkOne()">Los Angeles <img id="pin" src='../../assets/images/pin.svg'>
-                San Francisco</button>
-            </td>&nbsp;&nbsp;&nbsp;
-            <td>
-              <button type="submit" class="primary-button" (click)="drawRouteLinkTwo()">Sao Paulo <img id="pin" src='../../assets/images/pin.svg'>
-              Rio de janerio</button>
-            </td>
-          </tr><br>
-          <tr>
-            <td>
-              <button type="submit" class="primary-button" (click)="drawRouteLinkThree()">Shanghai <img id="pin" src='../../assets/images/pin.svg'>
-              Beijing</button>
-            </td>&nbsp;&nbsp;&nbsp;
-            <td>
-              <button type="submit" class="primary-button" (click)="drawRouteLinkFour()">London <img id="pin" src='../../assets/images/pin.svg'>
-                Paris</button>
-            </td>
-          </tr>
-        </table>
+      <table class="pre-existing-route">
+        <tr>
+          <td>
+            <button type="submit" class="primary-button" (click)="drawRouteLinkOne()">Los Angeles <img id="pin" src='../../assets/images/pin.svg'>
+            San Francisco</button>
+          </td>&nbsp;&nbsp;&nbsp;
+          <td>
+            <button type="submit" class="primary-button" (click)="drawRouteLinkTwo()">Sao Paulo <img id="pin" src='../../assets/images/pin.svg'>
+            Rio de janerio</button>
+          </td>
+        </tr><br>
+        <tr>
+          <td>
+            <button type="submit" class="primary-button" (click)="drawRouteLinkThree()">Shanghai <img id="pin" src='../../assets/images/pin.svg'>
+            Beijing</button>
+          </td>&nbsp;&nbsp;&nbsp;
+          <td>
+            <button type="submit" class="primary-button" (click)="drawRouteLinkFour()">London <img id="pin" src='../../assets/images/pin.svg'>
+            Paris</button>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
-
 </div>
+}
 
